@@ -445,6 +445,10 @@ schema.virtual('status.name').get(function(){
     return 'checked in';
   }
 
+  if (this.status.didNotConfirm) {
+    return "waitlist";
+  }
+
   if (this.status.declined) {
     return "declined";
   }

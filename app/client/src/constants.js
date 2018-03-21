@@ -15,4 +15,5 @@ angular.module('reg')
         ADMITTED_AND_CANNOT_CONFIRM: 'Although you were accepted, you did not complete your confirmation in time.\nUnfortunately, this means that you will not be able to attend the event, as we must begin to accept other applicants on the waitlist.\nWe hope to see you again next year!',
         CONFIRMED_NOT_PAST_TITLE: 'You can edit your confirmation information until Bitcamp begins',
         DECLINED: 'We\'re sorry to hear that you won\'t be able to make it to Bitcamp! :(\nMaybe next year! We hope you see you again soon.',
+        DID_NOT_CONFIRM: 'We\'re sorry, we did not receive your confirmation in time for this year\'s Bitcamp. You have been put onto the waitlist for this year\'s event.'
     });
