@@ -43,6 +43,10 @@
           </p>
         </div>
 
+        <div class="description" ng-if="dashState('didNotConfirm')">
+          <p>{{ DASHBOARD.DID_NOT_CONFIRM }}</p>
+        </div>
+
         <div
           ng-if="dashState('unverified')"
           class="description">
