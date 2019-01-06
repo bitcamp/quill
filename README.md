@@ -89,7 +89,7 @@ npm run config
 
 Edit the configuration file in `.env` for your setup, and then run the application:
 ```
-gulp server
+npm run dev
 ```
 
 # Customizing for your event

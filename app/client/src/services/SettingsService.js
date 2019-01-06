@@ -20,14 +20,6 @@ angular.module('reg')
           time: time
         });
       },
-      getWhitelistedEmails: function(){
-        return $http.get(base + 'whitelist');
-      },
-      updateWhitelistedEmails: function(emails){
-        return $http.put(base + 'whitelist', {
-          emails: emails
-        });
-      },
       updateWaitlistText: function(text){
         return $http.put(base + 'waitlist', {
           text: text

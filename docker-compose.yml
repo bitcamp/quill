@@ -18,4 +18,4 @@ services:
       - /quill/node_modules
     ports:
       - 3000:3000
-    command: gulp server
+    command: npm run dev

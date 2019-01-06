@@ -1,15 +1,11 @@
-var mongoose = require('mongoose');
-var validator = require('validator');
+const mongoose = require('mongoose');
 
 /**
  * Settings Schema!
  *
- * Fields with select: false are not public.
- * These can be retrieved in controller methods.
- *
  * @type {mongoose}
  */
-var schema = new mongoose.Schema({
+const schema = new mongoose.Schema({
   status: String,
   timeOpen: {
     type: Number,
@@ -21,12 +17,7 @@ var schema = new mongoose.Schema({
   },
   timeConfirm: {
     type: Number,
-    default: 604800000 // Date of confirmation
-  },
-  whitelistedEmails: {
-    type: [String],
-    select: false,
-    default: ['.edu'],
+    default: Date.now() + 31104000000 // Add a year from now.
   },
   waitlistText: {
     type: String
@@ -41,20 +32,6 @@ var schema = new mongoose.Schema({
     type: Boolean
   }
 });
-
-/**
- * Get the list of whitelisted emails.
- * Whitelist emails are by default not included in settings.
- * @param  {Function} callback args(err, emails)
- */
-schema.statics.getWhitelistedEmails = function(callback){
-  this
-    .findOne({})
-    .select('whitelistedEmails')
-    .exec(function(err, settings){
-      return callback(err, settings.whitelistedEmails);
-    });
-};
 
 /**
  * Get the open and close time for registration.

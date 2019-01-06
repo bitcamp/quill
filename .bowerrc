@@ -1,3 +1,4 @@
 {
-  "directory": "app/client/plugins"
+  "directory": "app/client/plugins",
+  "allow_root": true
 }

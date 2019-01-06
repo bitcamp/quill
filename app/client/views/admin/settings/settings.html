@@ -104,37 +104,6 @@ class="ui green segment">
   </div>
 </div>
 
-<!-- Whitelist -->
-<div
-  ng-class="{'loading': loading}"
-  class="ui green segment">
-
-  <div class="ui header">
-    Whitelisted Emails
-  </div>
-
-  <div class="ui form">
-   <div
-      class="ui label"
-      ng-repeat="email in whitelist.replace(' ','').split(',')">
-      {{email}}
-    </div>
-    <br>
-    <br>
-    <div class="field">
-      <textarea class="ui input" type="text" ng-model="whitelist">
-      </textarea>
-    </div>
-    <div class="field">
-      <div
-        class="ui green button"
-        ng-click="updateWhitelist()">
-        Update
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Waitlist Text Editor -->
 <div
   ng-class="{'loading': loading}"

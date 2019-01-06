@@ -32,7 +32,6 @@ app.use(methodOverride());
 app.use(express.static(__dirname + '/app/client'));
 
 // Routers =====================================================================
-
 var apiRouter = express.Router();
 require('./app/server/routes/api')(apiRouter);
 app.use('/api', apiRouter);
@@ -46,4 +45,3 @@ require('./app/server/routes')(app);
 // listen (start app with node server.js) ======================================
 app.listen(port);
 console.log("App listening on port " + port);
-
