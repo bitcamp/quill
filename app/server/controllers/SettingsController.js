@@ -1,6 +1,6 @@
 var Settings = require('../models/Settings');
 
-var SettingsController = {};
+let SettingsController = {};
 
 /**
  * Update any field in the settings.
@@ -18,38 +18,13 @@ SettingsController.updateField = function(field, value, callback){
 };
 
 /**
- * Update the list of whitelisted emails and email extensions.
- * @param  {[type]}   emails   [description]
- * @param  {Function} callback args(err, settings)
- */
-SettingsController.updateWhitelistedEmails = function(emails, callback){
-  Settings
-    .findOneAndUpdate({},{
-      $set: {
-        whitelistedEmails: emails
-      }
-    }, {new: true})
-    .select('whitelistedEmails')
-    .exec(callback);
-};
-
-/**
- * Get the list of whitelisted emails.
- * Whitelist emails are by default not included in settings.
- * @param  {Function} callback args(err, emails)
- */
-SettingsController.getWhitelistedEmails = function(callback){
-  Settings.getWhitelistedEmails(callback);
-};
-
-/**
  * Set the time window for registrations.
  * If either open or close are null, do not change that time.
  * @param  {Number}   open     Open time in ms
  * @param  {Number}   close    Close time in ms
  * @param  {Function} callback args(err, settings)
  */
-SettingsController.updateRegistrationTimes = function(open, close, callback){
+SettingsController.updateRegistrationTimes = function(open, close, callback) {
   var updatedTimes = {};
 
   if (close <= open){

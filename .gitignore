@@ -1,7 +1,15 @@
-db/
+# External Packages
 node_modules/
+
+# Database
+data/
+data/db/
+
+# Build dirs
 app/client/build/
 app/client/plugins/
 *.log
+
+# Configuration
 .env
 docker-compose.override.yml

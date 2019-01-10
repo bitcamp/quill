@@ -1,43 +1,39 @@
 // Load the dotfiles.
 require('dotenv').load({silent: true});
 
-var express         = require('express');
+// Application and Middleware
+const express         = require('express');
+const bodyParser      = require('body-parser');
+const methodOverride  = require('method-override');
+const morgan          = require('morgan');
 
-// Middleware!
-var bodyParser      = require('body-parser');
-var methodOverride  = require('method-override');
-var morgan          = require('morgan');
+// Database
+const mongoose        = require('mongoose');
+const port            = process.env.PORT || 3000;
+const database        = process.env.DATABASE || process.env.MONGODB_URI || "mongodb://localhost:27017";
 
-var mongoose        = require('mongoose');
-var port            = process.env.PORT || 3000;
-var database        = process.env.DATABASE || process.env.MONGODB_URI || "mongodb://localhost:27017";
+// Create default admin user and settings on first startup
+const settingsConfig  = require('./app/server/config/settings');
+const adminConfig     = require('./app/server/config/admin');
 
-var settingsConfig  = require('./config/settings');
-var adminConfig     = require('./config/admin');
-
-var app             = express();
+// Create the app and apply middleware
+const app             = express();
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(methodOverride());
 
 // Connect to mongodb
 mongoose.connect(database);
 
-app.use(morgan('dev'));
-
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-app.use(bodyParser.json());
-
-app.use(methodOverride());
-
 app.use(express.static(__dirname + '/app/client'));
 
 // Routers =====================================================================
-
-var apiRouter = express.Router();
+const apiRouter = express.Router();
 require('./app/server/routes/api')(apiRouter);
 app.use('/api', apiRouter);
 
-var authRouter = express.Router();
+const authRouter = express.Router();
 require('./app/server/routes/auth')(authRouter);
 app.use('/auth', authRouter);
 
@@ -46,4 +42,3 @@ require('./app/server/routes')(app);
 // listen (start app with node server.js) ======================================
 app.listen(port);
 console.log("App listening on port " + port);
-

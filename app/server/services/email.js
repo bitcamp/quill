@@ -1,30 +1,29 @@
-var path = require('path');
-var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
+const path = require('path'),
+      nodemailer = require('nodemailer'),
+      smtpTransport = require('nodemailer-smtp-transport'),
+      templatesDir = path.join(__dirname, '../templates'),
+      emailTemplates = require('email-templates'),
 
-var templatesDir = path.join(__dirname, '../templates');
-var emailTemplates = require('email-templates');
+      NODE_ENV = process.env.NODE_ENV,
 
-var ROOT_URL = process.env.ROOT_URL;
+      ROOT_URL = process.env.ROOT_URL,
+      HACKATHON_NAME = process.env.HACKATHON_NAME,
+      EMAIL_ADDRESS = process.env.EMAIL_ADDRESS,
+      TWITTER_HANDLE = process.env.TWITTER_HANDLE,
+      FACEBOOK_HANDLE = process.env.FACEBOOK_HANDLE,
 
-var HACKATHON_NAME = process.env.HACKATHON_NAME;
-var EMAIL_ADDRESS = process.env.EMAIL_ADDRESS;
-var TWITTER_HANDLE = process.env.TWITTER_HANDLE;
-var FACEBOOK_HANDLE = process.env.FACEBOOK_HANDLE;
+      EMAIL_HOST = process.env.EMAIL_HOST,
+      EMAIL_USER = process.env.EMAIL_USER,
+      EMAIL_PASS = process.env.EMAIL_PASS,
+      EMAIL_PORT = process.env.EMAIL_PORT,
+      EMAIL_CONTACT = process.env.EMAIL_CONTACT,
+      EMAIL_HEADER_IMAGE = process.env.EMAIL_HEADER_IMAGE;
 
-var EMAIL_HOST = process.env.EMAIL_HOST;
-var EMAIL_USER = process.env.EMAIL_USER;
-var EMAIL_PASS = process.env.EMAIL_PASS;
-var EMAIL_PORT = process.env.EMAIL_PORT;
-var EMAIL_CONTACT = process.env.EMAIL_CONTACT;
-var EMAIL_HEADER_IMAGE = process.env.EMAIL_HEADER_IMAGE;
 if(EMAIL_HEADER_IMAGE.indexOf("https") == -1){
   EMAIL_HEADER_IMAGE = ROOT_URL + EMAIL_HEADER_IMAGE;
 }
 
-var NODE_ENV = process.env.NODE_ENV;
-
-var options = {
+const options = {
   host: EMAIL_HOST,
   port: EMAIL_PORT,
   secure: true,
@@ -34,9 +33,9 @@ var options = {
   }
 };
 
-var transporter = nodemailer.createTransport(smtpTransport(options));
+const transporter = nodemailer.createTransport(smtpTransport(options));
 
-var controller = {};
+let controller = {};
 
 controller.transporter = transporter;
 
@@ -85,34 +84,25 @@ function sendOne(templateName, options, data, callback){
  * @return {[type]}            [description]
  */
 controller.sendVerificationEmail = function(email, token, callback) {
-
-  var options = {
+  const options = {
     to: email,
     subject: "["+HACKATHON_NAME+"] - Verify your email"
   };
-
-  var locals = {
+  const locals = {
     verifyUrl: ROOT_URL + '/verify/' + token
   };
 
-  /**
-   * Eamil-verify takes a few template values:
-   * {
-   *   verifyUrl: the url that the user must visit to verify their account
-   * }
-   */
   sendOne('email-verify', options, locals, function(err, info){
-    if (err){
+    if (err) {
       console.log(err);
     }
-    if (info){
+    if (info) {
       console.log(info.message);
     }
-    if (callback){
+    if (callback) {
       callback(err, info);
     }
   });
-
 };
 
 /**
@@ -122,13 +112,11 @@ controller.sendVerificationEmail = function(email, token, callback) {
  * @param  {Function} callback [description]
  */
 controller.sendPasswordResetEmail = function(email, token, callback) {
-
-  var options = {
+  const options = {
     to: email,
     subject: "["+HACKATHON_NAME+"] - Password reset requested!"
   };
-
-  var locals = {
+  const locals = {
     title: 'Password Reset Request',
     subtitle: '',
     description: 'Somebody (hopefully you!) has requested that your password be reset. If ' +
@@ -137,24 +125,17 @@ controller.sendPasswordResetEmail = function(email, token, callback) {
     actionName: "Reset Password"
   };
 
-  /**
-   * Eamil-verify takes a few template values:
-   * {
-   *   verifyUrl: the url that the user must visit to verify their account
-   * }
-   */
-  sendOne('email-link-action', options, locals, function(err, info){
-    if (err){
+  sendOne('email-link-action', options, locals, function(err, info) {
+    if (err) {
       console.log(err);
     }
-    if (info){
+    if (info) {
       console.log(info.message);
     }
-    if (callback){
+    if (callback) {
       callback(err, info);
     }
   });
-
 };
 
 /**
@@ -163,23 +144,15 @@ controller.sendPasswordResetEmail = function(email, token, callback) {
  * @param  {Function} callback [description]
  */
 controller.sendPasswordChangedEmail = function(email, callback){
-
-  var options = {
+  const options = {
     to: email,
     subject: "["+HACKATHON_NAME+"] - Your password has been changed!"
   };
-
-  var locals = {
+  const locals = {
     title: 'Password Updated',
     body: 'Somebody (hopefully you!) has successfully changed your password.',
   };
 
-  /**
-   * Eamil-verify takes a few template values:
-   * {
-   *   verifyUrl: the url that the user must visit to verify their account
-   * }
-   */
   sendOne('email-basic', options, locals, function(err, info){
     if (err){
       console.log(err);
@@ -191,7 +164,6 @@ controller.sendPasswordChangedEmail = function(email, callback){
       callback(err, info);
     }
   });
-
 };
 
 module.exports = controller;

@@ -146,13 +146,11 @@ module.exports = function(router){
     function(req, res, next){
       var token = req.params.token;
       UserController.verifyByToken(token, function(err, user){
-
         if (err || !user){
           return res.status(400).send(err);
         }
 
         return res.json(user);
-
       });
     });
 

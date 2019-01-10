@@ -1,24 +1,19 @@
-var UserController = require('../controllers/UserController');
-var SettingsController = require('../controllers/SettingsController');
+const UserController = require('../controllers/UserController');
+const SettingsController = require('../controllers/SettingsController');
 
-var request = require('request');
+const request = require('request');
 
 module.exports = function(router) {
-
-  function getToken(req){
+  function getToken(req) {
     return req.headers['x-access-token'];
   }
 
   /**
-   * Using the access token provided, check to make sure that
-   * you are, indeed, an admin.
+   * Use access token to make sure user is an admin
    */
-  function isAdmin(req, res, next){
-
-    var token = getToken(req);
-
+  function isAdmin(req, res, next) {
+    const token = getToken(req);
     UserController.getByToken(token, function(err, user){
-
       if (err) {
         return res.status(500).send(err);
       }
@@ -31,7 +26,6 @@ module.exports = function(router) {
       return res.status(401).send({
         message: 'Get outta here, punk!'
       });
-
     });
   }
 
@@ -44,12 +38,11 @@ module.exports = function(router) {
    * That, or you're the admin, so you can do whatever you
    * want I suppose!
    */
-  function isOwnerOrAdmin(req, res, next){
-    var token = getToken(req);
-    var userId = req.params.id;
+  function isOwnerOrAdmin(req, res, next) {
+    const token = getToken(req);
+    const userId = req.params.id;
 
     UserController.getByToken(token, function(err, user){
-
       if (err || !user) {
         return res.status(500).send(err);
       }
@@ -57,6 +50,7 @@ module.exports = function(router) {
       if (user._id == userId || user.admin){
         return next();
       }
+
       return res.status(400).send({
         message: 'Token does not match user id.'
       });
@@ -68,7 +62,7 @@ module.exports = function(router) {
    * @param  {[type]} res [description]
    * @return {[type]}     [description]
    */
-  function defaultResponse(req, res){
+  function defaultResponse(req, res) {
     return function(err, data){
       if (err){
         // SLACK ALERT!
@@ -121,24 +115,20 @@ module.exports = function(router) {
    * GET - Get all users, or a page at a time.
    * ex. Paginate with ?page=0&size=100
    */
-  router.get('/users', isAdmin, function(req, res){
-    var query = req.query;
+  router.get('/users', isAdmin, (req, res) => {
+    const query = req.query;
 
     if (query.page && query.size){
-
       UserController.getPage(query, defaultResponse(req, res));
-
     } else {
-
       UserController.getAll(defaultResponse(req, res));
-
     }
   });
 
   /**
    * [ADMIN ONLY]
    */
-  router.get('/users/stats', isAdmin, function(req, res){
+  router.get('/users/stats', isAdmin, (req, res) => {
     UserController.getStats(defaultResponse(req, res));
   });
 
@@ -147,7 +137,7 @@ module.exports = function(router) {
    *
    * GET - Get a specific user.
    */
-  router.get('/users/:id', isOwnerOrAdmin, function(req, res){
+  router.get('/users/:id', isOwnerOrAdmin, (req, res) => {
     UserController.getById(req.params.id, defaultResponse(req, res));
   });
 
@@ -168,9 +158,9 @@ module.exports = function(router) {
    *
    * PUT - Update a specific user's confirmation information.
    */
-  router.put('/users/:id/confirm', isOwnerOrAdmin, function(req, res){
-    var confirmation = req.body.confirmation;
-    var id = req.params.id;
+  router.put('/users/:id/confirm', isOwnerOrAdmin, (req, res) => {
+    const confirmation = req.body.confirmation;
+    const id = req.params.id;
 
     UserController.updateConfirmationById(id, confirmation, defaultResponse(req, res));
   });
@@ -181,32 +171,9 @@ module.exports = function(router) {
    * POST - Decline an acceptance.
    */
   router.post('/users/:id/decline', isOwnerOrAdmin, function(req, res){
-    var confirmation = req.body.confirmation;
-    var id = req.params.id;
+    const id = req.params.id;
 
     UserController.declineById(id, defaultResponse(req, res));
-  });
-
-  /**
-   * Update a user's password.
-   * {
-   *   oldPassword: STRING,
-   *   newPassword: STRING
-   * }
-   */
-  router.put('/users/:id/password', isOwnerOrAdmin, function(req, res){
-    return res.status(304).send();
-    // Currently disable.
-    // var id = req.params.id;
-    // var old = req.body.oldPassword;
-    // var pass = req.body.newPassword;
-
-    // UserController.changePassword(id, old, pass, function(err, user){
-    //   if (err || !user){
-    //     return res.status(400).send(err);
-    //   }
-    //   return res.json(user);
-    // });
   });
 
   /**
@@ -255,7 +222,7 @@ module.exports = function(router) {
    *   allowMinors: Boolean
    * }
    */
-  router.get('/settings', function(req, res){
+  router.get('/settings', (req, res) => {
     SettingsController.getPublicSettings(defaultResponse(req, res));
   });
 
@@ -265,7 +232,7 @@ module.exports = function(router) {
    *   text: String
    * }
    */
-  router.put('/settings/waitlist', isAdmin, function(req, res){
+  router.put('/settings/waitlist', isAdmin, (req, res) => {
     var text = req.body.text;
     SettingsController.updateField('waitlistText', text, defaultResponse(req, res));
   });
@@ -317,30 +284,6 @@ module.exports = function(router) {
   });
 
   /**
-   * Get the whitelisted emails.
-   *
-   * res: {
-   *   emails: [String]
-   * }
-   */
-  router.get('/settings/whitelist', isAdmin, function(req, res){
-    SettingsController.getWhitelistedEmails(defaultResponse(req, res));
-  });
-
-  /**
-   * [ADMIN ONLY]
-   * {
-   *   emails: [String]
-   * }
-   * res: Settings
-   *
-   */
-  router.put('/settings/whitelist', isAdmin, function(req, res){
-    var emails = req.body.emails;
-    SettingsController.updateWhitelistedEmails(emails, defaultResponse(req, res));
-  });
-
-  /**
    * [ADMIN ONLY]
    * {
    *   allowMinors: Boolean
@@ -349,8 +292,7 @@ module.exports = function(router) {
    *
    */
   router.put('/settings/minors', isAdmin, function(req, res){
-    var allowMinors = req.body.allowMinors;
+    const allowMinors = req.body.allowMinors;
     SettingsController.updateField('allowMinors', allowMinors, defaultResponse(req, res));
   });
-
 };
