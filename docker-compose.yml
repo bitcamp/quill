@@ -10,14 +10,14 @@ services:
     ports:
       - 27017:27017
   quill:
-    build: .
+    build: ./app
     depends_on:
       - mongodb
     volumes:
-      - ./:/quill
-      - /quill/node_modules
+      - ./app:/quill/app
+      - /quill/app/node_modules
       - /quill/app/client/build
       - /quill/app/client/plugins
     ports:
-      - 3000:3000
+      - 3001:3001
     command: npm run dev

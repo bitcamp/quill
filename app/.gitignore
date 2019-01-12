@@ -1,0 +1,7 @@
+# Build files
+app/node_modules/
+app/client/build/
+app/client/plugins/
+
+# Configuration
+.env

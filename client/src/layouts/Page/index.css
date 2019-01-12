@@ -1,0 +1,23 @@
+/* For Page/index.js */
+.pageNav {
+    margin: 0;
+    padding: 0;
+    width: 350px;
+    position: fixed;
+    overflow-y: auto;
+    top: 0;
+    bottom: 0;
+}
+
+.pageContent {
+    margin-left: 350px;
+    padding: 16px;
+}
+
+/* For SideNav.js */
+.navLogo {
+    height: auto;
+    width: 80%;
+    margin: 0 auto;
+    padding: 16px;
+}

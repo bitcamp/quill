@@ -27,7 +27,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "prod": "npm run build && node app.js",
-    "build": "bower install && gulp js && node-sass app/client/stylesheets/site.scss -o app/client/build",
+    "build": "bower install && gulp js && node-sass client/stylesheets/site.scss -o client/build",
     "config": "cp .env.config .env",
     "postinstall": "npm run build"
   },

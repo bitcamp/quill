@@ -11,7 +11,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "app/client/plugins",
+    "client/plugins",
     "test",
     "tests"
   ],
