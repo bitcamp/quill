@@ -2,8 +2,7 @@
 node_modules/
 
 # Database
-data/
-data/db/
+mongodb/data
 
 # Build dirs
 app/client/build/
