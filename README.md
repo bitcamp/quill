@@ -42,13 +42,20 @@ On the Settings tab, admins can easily control their event application timeline 
 # Setup
 The registration portal is designed to be deployed both locally and in production with Docker.
 
-### Deploying locally or for development
+### Deploying for local development
+#### Server instructions
+* cd into `./app` and run `npm run config` to create a new .env file, or just run `cp .env.config .env`
+* In your .env file, set the database URI to `DATABASE='mongodb:27017'`
+
+#### Client instructions
+* cd into `./client` and follow the README instructions there
+
+#### Entire Application instructions
 To use the docker-compose, just run the following:
 * Install docker and docker-compose
-* Run `npm run config` to create a new .env file, or just run `cp .env.config .env`
+* cd back into the root directory
 * Run `docker-compose up`, which will spin up an instance of mongodb and run the server
     - Linux users might need to run docker with sudo
-* In your .env file, set the database URI to `DATABASE='mongodb:27017'`
 
 ### Deploying for production
 * Create a docker-compose.override.yml file

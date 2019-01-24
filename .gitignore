@@ -1,14 +1,2 @@
-# External Packages
-node_modules/
-
-# Database
-mongodb/data
-
-# Build dirs
-app/client/build/
-app/client/plugins/
-*.log
-
 # Configuration
-.env
 docker-compose.override.yml

@@ -9,12 +9,12 @@ const morgan          = require('morgan');
 
 // Database
 const mongoose        = require('mongoose');
-const port            = process.env.PORT || 3000;
+const port            = process.env.PORT || 3001;
 const database        = process.env.DATABASE || process.env.MONGODB_URI || "mongodb://localhost:27017";
 
 // Create default admin user and settings on first startup
-const settingsConfig  = require('./app/server/config/settings');
-const adminConfig     = require('./app/server/config/admin');
+const settingsConfig  = require('./server/config/settings');
+const adminConfig     = require('./server/config/admin');
 
 // Create the app and apply middleware
 const app             = express();
@@ -26,18 +26,25 @@ app.use(methodOverride());
 // Connect to mongodb
 mongoose.connect(database);
 
-app.use(express.static(__dirname + '/app/client'));
+app.use(express.static(__dirname + '/client'));
+
+// Enable CORS =================================================================
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // Routers =====================================================================
 const apiRouter = express.Router();
-require('./app/server/routes/api')(apiRouter);
+require('./server/routes/api')(apiRouter);
 app.use('/api', apiRouter);
 
 const authRouter = express.Router();
-require('./app/server/routes/auth')(authRouter);
+require('./server/routes/auth')(authRouter);
 app.use('/auth', authRouter);
 
-require('./app/server/routes')(app);
+require('./server/routes')(app);
 
 // listen (start app with node server.js) ======================================
 app.listen(port);
