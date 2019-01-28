@@ -2,8 +2,10 @@
   "name": "client3",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://my.bit.camp",
   "dependencies": {
     "custom-react-scripts": "0.2.2",
+    "gh-pages": "^2.0.1",
     "js-cookie": "^2.2.0",
     "mobx": "^2.7.0",
     "mobx-react": "^4.0.4",
@@ -17,6 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }
