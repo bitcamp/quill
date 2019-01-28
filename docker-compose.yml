@@ -14,10 +14,21 @@ services:
     depends_on:
       - mongodb
     volumes:
-      - ./app:/quill/app
-      - /quill/app/node_modules
-      - /quill/app/client/build
-      - /quill/app/client/plugins
+      - ./app:/quill/
+      - /quill/node_modules
+      - /quill/client/build
+      - /quill/client/plugins
     ports:
       - 3001:3001
     command: npm run dev
+  client:
+    build: ./client
+    depends_on:
+      - quill
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+      - /client/build
+    ports:
+      - 3000:3000
+    command: npm start
