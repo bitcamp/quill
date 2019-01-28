@@ -1,7 +1,7 @@
 # Build files
-app/node_modules/
-app/client/build/
-app/client/plugins/
+/node_modules/
+/client/build/
+/client/plugins/
 
 # Configuration
 .env
