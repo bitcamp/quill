@@ -7,36 +7,43 @@ export default class AppStore {
   @computed get loggedIn() {
     return this.token != null;
   }
+  @computed get adminLoggedIn() {
+    return this.user != null && this.user.admin;
+  }
 
-  @observable message = "";
-  @observable messageType = "";
+  @observable messages = [];
+  @action clearMessages = () => this.messages.length = 0;
 
   @action login = async (email, password, history) => {
     const loginResponse = await AuthService.login(null, email, password);
     const loginJson = await loginResponse.json();
-
     if (loginResponse.ok) {
       this.token = loginJson['token'];
       this.user = loginJson['user'];
       AuthService.setTokenInCookies(this.token);
       history.push('/');
     } else {
-      this.message = loginJson['message'];
-      this.messageType = "error";
+      this.clearMessages();
+      this.messages.push({
+        text: loginJson['message'],
+        type: 'error',
+      });
     }
   }
 
   @action loginWithToken = async (token) => {
     const loginResponse = await AuthService.login(token, null, null);
-
-    const loginJson  = await loginResponse.json();
+    const loginJson = await loginResponse.json();
     if (loginResponse.ok) {
       this.token = loginJson['token'];
       this.user = loginJson['user'];
       AuthService.setTokenInCookies(this.token);
     } else {
-      this.message = loginJson['message'];
-      this.messageType = "error";
+      this.clearMessages();
+      this.messages.push({
+        text: loginJson['message'],
+        type: 'error',
+      });
     }
   }
 
@@ -45,10 +52,5 @@ export default class AppStore {
     this.user = {};
     AuthService.logout();
     history.push('/login');
-  }
-
-  @observable counter = 0;
-  @action increment = () => {
-    this.counter += 1;
   }
 }
