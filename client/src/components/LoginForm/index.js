@@ -40,9 +40,9 @@ class LoginForm extends React.Component {
             type='password'
             onChange={this.handleChange}
           />
-          <Button color='teal' fluid size='large' content="Login" />
+          <Button color='orange' fluid size='large' content="Login" />
           <Divider horizontal content="Or" />
-          <Button color='green' fluid size='large' content="Signup" onClick={this.handleSignup} />
+          <Button color='blue' fluid size='large' content="Signup" onClick={this.handleSignup} />
         </Segment>
       </Form>
     );

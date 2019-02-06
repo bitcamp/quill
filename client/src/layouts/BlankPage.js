@@ -1,19 +1,22 @@
 import React from 'react'
 import { Grid, Header, Image } from 'semantic-ui-react'
 import Messages from '../containers/Messages';
+import logo from '../images/logo.svg';
 
 const gridStyle = { height: '100%' };
 const colStyle = { maxWidth: 450 };
 
-class LoginPage extends React.Component {
+class BlankPage extends React.Component {
   render () {
+    const header = this.props.title
+      ? <Header as='h1' color='black' textAlign='center' content={this.props.title} />
+      : null;
     return (
       <div className='login-form'>
         <Grid textAlign='center' style={gridStyle} verticalAlign='middle'>
           <Grid.Column style={colStyle}>
-            <Header as='h2' color='teal' textAlign='center'>
-              <Image src='/favicon.ico' /> Login to your account
-            </Header>
+            <Image size='small' centered src={logo} /> <br />
+            {header}
             <Messages />
             {this.props.children}
           </Grid.Column>
@@ -31,4 +34,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default BlankPage;

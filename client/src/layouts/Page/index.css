@@ -2,7 +2,7 @@
 .pageNav {
     margin: 0;
     padding: 0;
-    width: 350px;
+    width: 275px;
     position: fixed;
     overflow-y: auto;
     top: 0;
@@ -10,7 +10,7 @@
 }
 
 .pageContent {
-    margin-left: 350px;
+    margin-left: 275px;
     padding: 16px;
 }
 

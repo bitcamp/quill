@@ -6,11 +6,14 @@ import Home from './Home';
 import Apply from './Apply';
 import Confirm from './Confirm';
 import Admin from './Admin';
+import Verify from './Verify';
 import withHooks from '../util/withHooks';
 
 @inject('store')
 @observer
 class App extends React.Component {
+  noop = () => {};
+
   ensureAuth = (history) => {
     if (!this.props.store.loggedIn) {
       history.replace('/login');
@@ -35,11 +38,12 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Route path="/" exact  component={withHooks(Home,    this.ensureAuth,      this.clearMessages)} />
-          <Route path="/login"   component={withHooks(Login,   this.ensureNoAuth,    this.clearMessages)} />
-          <Route path="/apply"   component={withHooks(Apply,   this.ensureAuth,      this.clearMessages)} />
-          <Route path="/confirm" component={withHooks(Confirm, this.ensureAuth,      this.clearMessages)} />
-          <Route path="/admin"   component={withHooks(Admin,   this.ensureAdminAuth, this.clearMessages)} />
+          <Route path="/" exact        component={withHooks(Home,    this.ensureAuth,      this.clearMessages)} />
+          <Route path="/login"         component={withHooks(Login,   this.ensureNoAuth,    this.clearMessages)} />
+          <Route path="/apply"         component={withHooks(Apply,   this.ensureAuth,      this.clearMessages)} />
+          <Route path="/confirm"       component={withHooks(Confirm, this.ensureAuth,      this.clearMessages)} />
+          <Route path="/admin"         component={withHooks(Admin,   this.ensureAdminAuth, this.clearMessages)} />
+          <Route path="/verify/:token" component={withHooks(Verify,  this.noop,            this.clearMessages)} />
         </div>
       </Router>
     );
