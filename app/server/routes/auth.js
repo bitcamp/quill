@@ -140,6 +140,7 @@ module.exports = function(router){
   });
 
   /**
+   * TODO: Change this to a POST request. Why wasn't this a POST before???
    * Verify a user with a given token.
    */
    router.get('/verify/:token',

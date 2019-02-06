@@ -31,3 +31,35 @@ export const login = async (token, email, password) => {
 export const logout = () => {
   Cookies.remove(TOKEN_COOKIE_NAME);
 }
+
+export const signup = async (email, password) => {
+  const url = AUTH_URL + "/register";
+  const data = { email, password };
+  const options = {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }
+
+  const response = await fetch(url, options);
+  return response;
+}
+
+export const verify = async (verifyToken) => {
+  const url = AUTH_URL + `/verify/${verifyToken}`;
+  const options = {
+    method: "get", // TODO: change backend to make this a post
+    mode: "cors",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}
