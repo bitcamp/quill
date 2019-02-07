@@ -402,8 +402,11 @@ UserController.sendPasswordResetEmail = function(email, callback){
   User
     .findOneByEmail(email)
     .exec(function(err, user){
-      if (err || !user){
+      if (err) {
         return callback(err);
+      }
+      if (!user) {
+        return callback({ message: 'No account exists with that email' });
       }
 
       const token = user.generateTempAuthToken();

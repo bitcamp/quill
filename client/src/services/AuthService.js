@@ -63,3 +63,37 @@ export const verify = async (verifyToken) => {
   const response = await fetch(url, options);
   return response;
 }
+
+export const sendPasswordResetEmail = async (email) => {
+  const url = AUTH_URL + '/reset';
+  const data = { email };
+  const options = {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}
+
+export const resetPassword = async (token, password) => {
+  const url = AUTH_URL + '/reset/password';
+  const data = { token, password };
+  const options = {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}

@@ -4,9 +4,9 @@ import { withRouter } from "react-router";
 import BlankPage from '../layouts/BlankPage';
 import LoginForm from '../components/LoginForm';
 
+@withRouter
 @inject('store')
 @observer
-@withRouter
 class Login extends React.Component {
   handleLogin = (email, password) => {
     console.log("Trying to login user");

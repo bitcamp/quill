@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from "react-router";
 import { Header } from 'semantic-ui-react';
 import Messages from '../../containers/Messages';
+import Loading from '../../containers/Loading';
 import SideNav from './SideNav';
 import './index.css';
 
@@ -22,6 +23,7 @@ export default class PageLayout extends React.Component {
           <SideNav isAdmin canConfirm handleLogout={this.handleLogout} />
         </div>
         <div className="pageContent">
+          <Loading />
           <Header as='h1' dividing textAlign='center' content={this.props.title} />
           <Messages />
           {this.props.children}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Form, Segment, Button, Divider } from 'semantic-ui-react';
 
 class LoginForm extends React.Component {
@@ -43,6 +44,8 @@ class LoginForm extends React.Component {
           <Button color='orange' fluid size='large' content="Login" />
           <Divider horizontal content="Or" />
           <Button color='blue' fluid size='large' content="Signup" onClick={this.handleSignup} />
+          <Divider />
+          <Link to='/forgot'>Forgot Password?</Link>
         </Segment>
       </Form>
     );
