@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Header, Image } from 'semantic-ui-react'
 import Messages from '../containers/Messages';
+import Loading from '../containers/Loading';
 import logo from '../images/logo.svg';
 
 const gridStyle = { height: '100%' };
@@ -13,6 +14,7 @@ class BlankPage extends React.Component {
       : null;
     return (
       <div className='login-form'>
+        <Loading />
         <Grid textAlign='center' style={gridStyle} verticalAlign='middle'>
           <Grid.Column style={colStyle}>
             <Image size='small' centered src={logo} /> <br />

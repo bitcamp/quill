@@ -14,8 +14,12 @@ export default class AppStore {
   @observable messages = [];
   @action clearMessages = () => this.messages.length = 0;
 
+  @observable loading = false;
+
   @action login = async (email, password, history) => {
+    this.loading = true;
     const loginResponse = await AuthService.login(null, email, password);
+    this.loading = false;
     const loginJson = await loginResponse.json();
 
     if (loginResponse.ok) {
@@ -33,7 +37,9 @@ export default class AppStore {
   }
 
   @action loginWithToken = async (token) => {
+    this.loading = true;
     const loginResponse = await AuthService.login(token, null, null);
+    this.loading = false;
     const loginJson = await loginResponse.json();
 
     if (loginResponse.ok) {
@@ -60,7 +66,9 @@ export default class AppStore {
   }
 
   @action signup = async (email, password, history) => {
+    this.loading = true;
     const signupResponse = await AuthService.signup(email, password);
+    this.loading = false;
     const signupJson = await signupResponse.json();
     
     if (signupResponse.ok) {
@@ -78,7 +86,9 @@ export default class AppStore {
   }
 
   @action verify = async (token, history) => {
+    this.loading = true;
     const verifyResponse = await AuthService.verify(token);
+    this.loading = false;
 
     if (verifyResponse.ok) {
       if (this.loggedIn) {
@@ -101,4 +111,61 @@ export default class AppStore {
 
     return false;
   }
+
+  @action sendPasswordResetEmail = async (email) => {
+    this.loading = true;
+    const response = await AuthService.sendPasswordResetEmail(email);
+    this.loading = false;
+
+    if (response.ok) {
+      this.clearMessages();
+      this.messages.push({
+        text: 'Check your email to reset your password!',
+        type: 'success',
+      });
+      return true;
+    } else { 
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+
+    return false;
+  }
+
+  @action resetPassword = async (tempToken, newPassword, oldPassword, history) => {
+    if (newPassword !== oldPassword) {
+      this.clearMessages();
+      this.messages.push({
+        text: 'Passwords do not match!',
+        type: 'error',
+      });
+      return false;
+    }
+
+    this.loading = true;
+    const response = await AuthService.resetPassword(tempToken, newPassword);
+    this.loading = false;
+
+    if (response.ok) {
+      this.clearMessages();
+      this.messages.push({
+        text: 'Your password was reset successfully!',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+
+    return false;
+  };
 }

@@ -7,6 +7,8 @@ import Apply from './Apply';
 import Confirm from './Confirm';
 import Admin from './Admin';
 import Verify from './Verify';
+import Forgot from './Forgot';
+import Reset from './Reset';
 import withHooks from '../util/withHooks';
 
 @inject('store')
@@ -44,6 +46,8 @@ class App extends React.Component {
           <Route path="/confirm"       component={withHooks(Confirm, this.ensureAuth,      this.clearMessages)} />
           <Route path="/admin"         component={withHooks(Admin,   this.ensureAdminAuth, this.clearMessages)} />
           <Route path="/verify/:token" component={withHooks(Verify,  this.noop,            this.clearMessages)} />
+          <Route path="/forgot"        component={withHooks(Forgot,  this.noop,            this.clearMessages)} />
+          <Route path="/reset/:token"  component={withHooks(Reset,   this.noop,            this.clearMessages)} />
         </div>
       </Router>
     );
