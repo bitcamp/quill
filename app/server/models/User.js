@@ -16,18 +16,13 @@ const profile = {
     min: 1,
     max: 100,
   },
-  phoneNumber: String,
-  email: {
-    type: String,
-    min: 1,
-    max: 100,
-  },
   gender: {
     type: String,
     enum : {
-      values: 'M F N'.split(' ')
+      values: 'M F N O P'.split(' ')
     }
   },
+  phoneNumber: String,
   adult: {
     type: Boolean,
     required: true,
@@ -39,18 +34,25 @@ const profile = {
       values: 'XS S M L XL XXL'.split(' ')
     }
   },
+  organization: {
+    type: String,
+    min: 1,
+    max: 1000,
+  },
+
+  // emergency contact
   emergencyContact: {
     name: String,
-    workNumber: String,
-    cellNumber: String,
     relationship: {
       type: String,
       min: 1,
       max: 100, 
     },
+    cellNumber: String,
+    workNumber: String,
   },
 
-  //School Information
+  // School Information
   school: {
     type: String,
     min: 1,
@@ -73,10 +75,10 @@ const profile = {
     max: 100,
   },
 
-  //Additional Logistics
+  // Additional Logistics
   dietaryRestrictions: [String],
   needsReimbursement: Boolean,
-  reimbursementYes: {
+  reimbursementOrigin: {
     type: String,
     min: 0,
     max: 150
@@ -86,7 +88,7 @@ const profile = {
   amtHackathons: {
     type: String,
     enum: {
-      values: '0 1-5 6-10 11-15 16-20 20+'.split(' '),
+      values: '0 1-5 6+'.split(' '),
     }
   },
   whyBitcamp: {
@@ -99,8 +101,10 @@ const profile = {
     min: 0,
     max: 1000
   },
+  workshops: [String],
 
-  //Professional
+  // Professional
+  // resume uses dropbox form
   interestedIn: {
     type: String,
     enum: {
@@ -253,6 +257,10 @@ let schema = new mongoose.Schema({
     type: Number,
     default: Date.now(),
   },
+  firstSubmitted: {
+    type: Number,
+    default: 32503680000000.0, // Jan 1, 3000 (way in the future because it's tricky to use null or undefined)
+  },
   verified: {
     type: Boolean,
     required: true,
@@ -392,7 +400,7 @@ schema.statics.validateProfile = function(profile, cb){
     profile.adult &&
     profile.school.length > 0 &&
     ['High-School', 'Freshman', 'Sophomore', 'Junior', 'Senior', 'Grad-Student', 'Graduated'].indexOf(profile.schoolYear) > -1 &&
-    ['M', 'F', 'O', 'N'].indexOf(profile.gender) > -1
+    ['M', 'F', 'N', 'P', 'O'].indexOf(profile.gender) > -1
     ));
 };
 

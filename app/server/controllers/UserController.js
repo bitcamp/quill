@@ -275,7 +275,10 @@ UserController.updateProfileById = function (id, profile, callback){
         'lastUpdated': Date.now(),
         'profile': profile,
         'status.completedProfile': true
-      }
+      },
+      $min: {
+        'firstSubmitted': Date.now(),
+      },
     }, {
       new: true
     },

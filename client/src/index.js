@@ -9,6 +9,12 @@ import './index.css';
 
 const appStore = new AppStore();
 
+const loadSchoolOptions = async () => {
+  const response = await fetch('/res/schoolOptions.json');
+  const responseJson = await response.json();
+  appStore.schoolOptions = responseJson;
+}
+
 const renderApp = async () => {
   const existingToken = AuthService.getTokenFromCookies();
   if (existingToken) {
@@ -23,4 +29,5 @@ const renderApp = async () => {
   );
 }
 
+loadSchoolOptions();
 renderApp();

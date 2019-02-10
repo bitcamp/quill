@@ -5,6 +5,8 @@
   "homepage": "https://my.bit.camp",
   "dependencies": {
     "custom-react-scripts": "0.2.2",
+    "formsy-react": "^1.1.5",
+    "formsy-semantic-ui-react": "^0.3.3",
     "gh-pages": "^2.0.1",
     "js-cookie": "^2.2.0",
     "mobx": "^2.7.0",
