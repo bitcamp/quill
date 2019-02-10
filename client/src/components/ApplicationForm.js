@@ -43,7 +43,7 @@ const dietaryOptions = [
   { text: 'Vegan', value: 'vegan', },
   { text: 'Vegetarian', value: 'vegetarian' },
   { text: 'Gluten-free', value: 'gluten-free' },
-  { text: 'Nut Allergy', vlaue: 'nut-allergy' },
+  { text: 'Nut Allergy', value: 'nut-allergy' },
 ];
 
 const workshopOptions = [
