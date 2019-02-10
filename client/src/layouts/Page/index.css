@@ -7,6 +7,11 @@
     overflow-y: auto;
     top: 0;
     bottom: 0;
+    z-index: 9999999999;
+}
+
+.topNav {
+    display: none;
 }
 
 .pageContent {
@@ -22,3 +27,26 @@
     margin: 0 auto;
     padding: 16px;
 }
+
+
+@media (max-width: 720px) {
+    .pageNav {
+        display: none;
+    }
+    .pageContent {
+        margin-left: 0px;
+        padding: 16px;
+        min-width: none;
+    }
+    .topNav {
+        display: block;
+        width: 100%;
+    }
+    .navLogo {
+        height: '100%';
+        width: auto;
+        margin: 0 auto;
+        display: none;
+    }
+}
+

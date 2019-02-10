@@ -5,6 +5,7 @@ import { Container, Header, Segment } from 'semantic-ui-react';
 import Messages from '../../containers/Messages';
 import Loading from '../../containers/Loading';
 import SideNav from './SideNav';
+import TopNav from './TopNav';
 import './index.css';
 
 @inject('store')
@@ -22,7 +23,15 @@ export default class PageLayout extends React.Component {
     const canConfirm = this.props.store.user.status.admitted || isAdmin;
 
     return (
-      <div style={{minHeight: '100vh', height: 0}} >
+      <div style={{minHeight: '100vh', height: 0, minWidth: '100vh'}} >
+        <div className='topNav'>
+          <TopNav
+            isAdmin={isAdmin}
+            canApply={canApply}
+            canConfirm={canConfirm}
+            handleLogout={this.handleLogout}
+          />
+        </div>
         <div className="pageNav">
           <SideNav 
             isAdmin={isAdmin}
