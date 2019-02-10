@@ -157,7 +157,7 @@ const bitcamp = [
   <Form.TextArea name='buildBitcamp'
     label='What are you planning to build at Bitcamp?' />,
   <Form.Dropdown multiple name='workshops' 
-    label='Which workshops are you interested in attending (pick up to 3)'
+    label='What types of workshops would you be interested in attending? (pick up to 3)'
     placeholder='Workshops'
     options={workshopOptions} />,
 ];
@@ -224,7 +224,7 @@ const legal = [
 const additional = [
   <Header {...headerProps} content='Extra' />,
   <Form.TextArea name='additional'
-    label='Is there anything else we should know?'
+    label="Is there anything else we should know? (e.g. additional workshop ideas, allergies that we didn't cover, etc...)"
   />
 ];
 
