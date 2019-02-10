@@ -14,6 +14,11 @@ class Home extends React.Component {
   }
 
   render() {
+    if (!this.props.store.loggedIn) {
+      return null;
+    }
+
+
     const { user } = this.props.store;
     
     const status = user.status.name.toUpperCase();
