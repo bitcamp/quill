@@ -11,7 +11,10 @@ const MenuItemLink = (props) => {
 
 export default class SideNav extends React.Component {
   render() {
-    const { canConfirm, isAdmin, handleLogout } = this.props;
+    const { canApply, canConfirm, isAdmin, handleLogout } = this.props;
+    const applyLink = canApply
+      ? <MenuItemLink to='/apply'><Icon name='clipboard list' />Apply</MenuItemLink>
+      : null;
     const confirmLink = canConfirm
       ? <MenuItemLink to='/confirm'><Icon name='check'/>Confirm</MenuItemLink>
       : null;
@@ -33,10 +36,7 @@ export default class SideNav extends React.Component {
           <Icon name='home'/>
           Home
         </MenuItemLink>
-        <MenuItemLink to="/apply">
-          <Icon name='clipboard list'/>
-          Apply
-        </MenuItemLink>
+        {applyLink}
         {confirmLink}
         {adminLink}
         <Menu.Item as='a' onClick={handleLogout}>

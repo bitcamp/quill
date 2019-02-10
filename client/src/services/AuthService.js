@@ -97,3 +97,20 @@ export const resetPassword = async (token, password) => {
   const response = await fetch(url, options);
   return response;
 }
+
+export const resendVerificationEmail = async (id) => {
+  const url = AUTH_URL + '/verify/resend';
+  const data = { id };
+  const options = {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}

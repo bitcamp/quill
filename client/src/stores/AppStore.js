@@ -1,5 +1,6 @@
 import { action, observable, computed } from 'mobx';
 import * as AuthService from '../services/AuthService';
+import * as UserService from '../services/UserService';
 
 export default class AppStore {
   @observable token = null;
@@ -15,6 +16,7 @@ export default class AppStore {
   @action clearMessages = () => this.messages.length = 0;
 
   @observable loading = false;
+  @observable schoolOptions = [];
 
   @action login = async (email, password, history) => {
     this.loading = true;
@@ -168,4 +170,52 @@ export default class AppStore {
 
     return false;
   };
+
+  @action updateProfile = async (profile) => { 
+    this.loading = true;
+    const response = await UserService.updateProfile(this.token, this.user._id, profile);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      this.messages.push({
+        text: 'Your profile was updated successfully',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+    
+    return false;
+  }
+
+  @action resendVerificationEmail = async (id) => {
+    this.loading = true;
+    const response = await AuthService.resendVerificationEmail(this.user._id);
+    this.loading = false;
+
+    if (response.ok) {
+      this.clearMessages();
+      this.messages.push({
+        text: 'Your verification email has been resent',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+  }
 }

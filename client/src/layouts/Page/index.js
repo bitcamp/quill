@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from "react-router";
-import { Header } from 'semantic-ui-react';
+import { Container, Header, Segment } from 'semantic-ui-react';
 import Messages from '../../containers/Messages';
 import Loading from '../../containers/Loading';
 import SideNav from './SideNav';
@@ -17,16 +17,31 @@ export default class PageLayout extends React.Component {
   }
 
   render() {
+    const isAdmin = this.props.store.adminLoggedIn;
+    const canApply = this.props.store.user.verified || isAdmin;
+    const canConfirm = this.props.store.user.status.admitted || isAdmin;
+
     return (
       <div style={{minHeight: '100vh', height: 0}} >
         <div className="pageNav">
-          <SideNav isAdmin canConfirm handleLogout={this.handleLogout} />
+          <SideNav 
+            isAdmin={isAdmin}
+            canApply={canApply}
+            canConfirm={canConfirm}
+            handleLogout={this.handleLogout}
+          />
         </div>
         <div className="pageContent">
-          <Loading />
-          <Header as='h1' dividing textAlign='center' content={this.props.title} />
-          <Messages />
-          {this.props.children}
+          <Container>
+            <Loading />
+            <Segment basic padded='very' style={{paddingTop: 16, paddingBottom: 2}}>
+              <Header as='h1' dividing textAlign='center' content={this.props.title} />
+            </Segment>
+            <Segment basic padded='very'>
+              <Messages />
+              {this.props.children}
+            </Segment>
+          </Container>
         </div>
       </div>
     )

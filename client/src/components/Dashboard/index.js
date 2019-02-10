@@ -1,16 +1,26 @@
 import React from 'react';
-import { Header, Segment } from 'semantic-ui-react';
+import { Header, Segment, Divider, Message, Button } from 'semantic-ui-react';
 
 export default class Dashboard extends React.Component {
   render() {
-    const { user } = this.props;
-    const userName = user.email;
-    const userStatus = user.status ? user.status.name : "";
+    const { userData, title, message, showButton, buttonContent, buttonAction } = this.props;
+    const { status, name } = userData;
+
+    const button = this.props.showButton
+      ? <Button color='orange' content={buttonContent} onClick={buttonAction} />
+      : null;
 
     return (
-      <Segment>
-        <Header as='h3'>Welcome, {userName}</Header>
-        <Header as='h3'>Status: {userStatus}</Header>
+      <Segment padded>
+        <Header as='h4' textAlign='center' style={{fontFamily: 'monospace'}}>YOUR STATUS:</Header>
+        <Message color='blue'>
+          <Header as='h2' textAlign='center'>{status}</Header>
+        </Message>
+        <Divider />
+        <Header as='h3' textAlign='center'>Welcome, {name}</Header>
+        <Header as='h3' textAlign='center'>{title}</Header>
+        <Header as='h5'>{message}</Header>
+        <Header as='h5' textAlign='center'>{button}</Header>
       </Segment>
     )
   }
