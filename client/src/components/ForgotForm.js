@@ -37,7 +37,7 @@ class ForgotForm extends React.Component {
             content='Send Reset Email'
           />
           <Divider />
-          <Link to='/login'>Login or Register</Link>
+          <Link to='/login'>Login</Link>
         </Segment>
       </Form>
     );

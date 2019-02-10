@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { inject, observer } from 'mobx-react';
 import Login from './Login';
+import Signup from './Signup';
 import Home from './Home';
 import Apply from './Apply';
 import Confirm from './Confirm';
@@ -42,6 +43,7 @@ class App extends React.Component {
         <div>
           <Route path="/" exact        component={withHooks(Home,    this.ensureAuth,      this.clearMessages)} />
           <Route path="/login"         component={withHooks(Login,   this.ensureNoAuth,    this.clearMessages)} />
+          <Route path='/signup'        component={withHooks(Signup,  this.ensureNoAuth,    this.clearMessages)} />
           <Route path="/apply"         component={withHooks(Apply,   this.ensureAuth,      this.clearMessages)} />
           <Route path="/confirm"       component={withHooks(Confirm, this.ensureAuth,      this.clearMessages)} />
           <Route path="/admin"         component={withHooks(Admin,   this.ensureAdminAuth, this.clearMessages)} />
