@@ -124,7 +124,15 @@ const emergencyContact = [
 const schoolInformation = (schoolOptions) => [
   <Header {...headerProps} content='School Information' />,
   <Form.Select search required name='school' 
-    label='What school do you attend?' 
+    label={
+      <label>
+        What school do you attend? <br />
+        <span style={{fontWeight: 'normal'}}>
+          If you don't see your school listed here, please select <strong>Other</strong>{' '}
+          and let us know your school in the "Extra" box at the end of this form.
+        </span>
+      </label>
+    }
     options={schoolOptions} />,
   <Form.Select required name='schoolYear'
     label='What year are you in school?'
