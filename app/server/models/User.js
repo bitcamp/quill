@@ -46,7 +46,7 @@ const profile = {
     relationship: {
       type: String,
       min: 1,
-      max: 100, 
+      max: 100,
     },
     cellNumber: String,
     workNumber: String,
@@ -288,6 +288,22 @@ let schema = new mongoose.Schema({
   confirmation: confirmation,
 
   status: status,
+
+  /**
+   * Passwordless login
+   * Code and Expiration time
+   */
+  loginCode: {
+    type: String,
+    required: false,
+    default: null,
+  },
+
+  loginCodeExpiration: {
+    type: Number,
+    required: false,
+    default: Date.now(),
+  }
 });
 
 schema.set('toJSON', {
@@ -315,6 +331,21 @@ schema.methods.generateEmailVerificationToken = function(){
 schema.methods.generateAuthToken = function(){
   return jwt.sign(this._id, JWT_SECRET);
 };
+
+// Generate temp login code
+schema.methods.generateTempCode = function() {
+  // TOOD: way to generate a random code securely?
+  return "TEST";
+}
+
+// Validate temp login code
+schema.methods.checkTempCode = function(code) {
+  if(this.loginCodeExpiration > Date.now()) {
+    return this.loginCode === code;
+  } else {
+    return false;
+  }
+}
 
 /**
  * Generate a temporary authentication token (for changing passwords)

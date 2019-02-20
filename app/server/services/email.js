@@ -141,6 +141,38 @@ controller.sendPasswordResetEmail = function(email, token, callback) {
 /**
  * Send a password recovery email.
  * @param  {[type]}   email    [description]
+ * @param  {[type]}   token    [description]
+ * @param  {Function} callback [description]
+ */
+controller.sendTempLoginCode = function(email, code, callback) {
+  const options = {
+    to: email,
+    subject: "["+HACKATHON_NAME+"] - Temporary Login Code!"
+  };
+  const locals = {
+    title: 'Temporary Login Code',
+    subtitle: '',
+    body: 'Somebody (hopefully you!) has requested a temporary login code. If ' +
+      'this was not you, feel free to disregard this email. This code will expire in 5 minutes.' +
+      'The code is: ' + code,
+  };
+
+  sendOne('email-basic', options, locals, function(err, info) {
+    if (err) {
+      console.log(err);
+    }
+    if (info) {
+      console.log(info.message);
+    }
+    if (callback) {
+      callback(err, info);
+    }
+  });
+};
+
+/**
+ * Send a password recovery email.
+ * @param  {[type]}   email    [description]
  * @param  {Function} callback [description]
  */
 controller.sendPasswordChangedEmail = function(email, callback){

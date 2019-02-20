@@ -56,6 +56,52 @@ module.exports = function(router){
 
   });
 
+  router.post('/login/code',
+    function(req, res, next){
+      const email = req.body.email;
+      const code = req.body.code;
+      const token = req.body.token;
+
+      if (token) {
+        UserController.loginWithToken(token,
+          function(err, token, user){
+            if (err || !user) {
+              return res.status(400).send(err);
+            }
+            return res.json({
+              token: token,
+              user: user
+            });
+          });
+      } else {
+        UserController.loginWithTempCode(email, code,
+          function(err, token, user){
+            if (err || !user) {
+              return res.status(400).send(err);
+            }
+            return res.json({
+              token: token,
+              user: user
+            });
+          });
+      }
+  });
+
+  router.post('/login/requestCode',
+    function(req, res, next){
+      const email = req.body.email;
+      if(email) {
+        UserController.sendTempLoginCode(email, function(err, user){
+          if (err || !user){
+            return res.status(400).send();
+          }
+          return res.status(200).send();
+        });
+      } else {
+        return res.status(400).send();
+      }
+  });
+
   /**
    * Register a user with a username (email) and password.
    * If it already exists, then don't register, duh.

@@ -55,6 +55,87 @@ UserController.loginWithToken = function(token, callback){
 };
 
 /**
+ * Logs a user in with a temporary code that is emailed to them
+ * @param {String} email
+ * @param {String} code
+ * @param {Functio} callback
+ */
+UserController.loginWithTempCode = function(email, code, callback) {
+  if(!code || code.length === 0) {
+    return callback({
+      message: 'Please enter a code'
+    });
+  }
+
+  User
+    .findOneByEmail(email)
+    .exec((err, user) => {
+      if (err) {
+        return callback(err);
+      }
+
+      if (!user) {
+        return callback({
+          message: "We couldn't find you!"
+        });
+      }
+
+      if (!user.checkTempCode(code)) {
+        return callback({
+          message: "That's not the right login code."
+        });
+      }
+
+      const token = user.generateAuthToken();
+      let u = user.toJSON();
+
+      return callback(null, token, u);
+  });
+};
+
+/**
+ * Temp login code email
+ * @param  {[type]}   email
+ * @param  {Function} callback
+ * @return {[type]}
+ */
+UserController.sendTempLoginCode = function(email, callback){
+  User
+    .findOneByEmail(email)
+    .exec(function(err, user){
+      if (err) {
+        return callback(err);
+      }
+      if (!user) {
+        return callback({ message: 'No account exists with that email' });
+      }
+
+      const code = user.generateTempCode();
+
+      const time = new Date(Date.now() + 5*60*1000);
+
+      User.findOneAndUpdate({
+        'email': email,
+      },
+        {
+          $set: {
+            'loginCode': code,
+            'loginCodeExpiration': time.getTime(),
+          }
+        }, {
+          new: true
+        },
+        function(err, user){
+          if (err || !user){
+            return callback(err);
+          }
+          Mailer.sendTempLoginCode(email, code, callback);
+          return callback(err, user);
+        });
+    });
+};
+
+/**
  * Login a user given an email and password.
  * @param  {String}   email    Email address
  * @param  {String}   password Password
