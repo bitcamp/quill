@@ -6,7 +6,7 @@ export default class Dashboard extends React.Component {
     const { userData, title, message, showButton, buttonContent, buttonAction } = this.props;
     const { status, name } = userData;
 
-    const button = this.props.showButton
+    const button = showButton
       ? <Button color='orange' content={buttonContent} onClick={buttonAction} />
       : null;
 

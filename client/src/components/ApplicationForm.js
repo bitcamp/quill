@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { addValidationRule } from 'formsy-react';
 import { Form } from 'formsy-semantic-ui-react';
-import { Label, Button } from 'semantic-ui-react';
+import { Label } from 'semantic-ui-react';
 import DefaultForm from '../util/DefaultForm';
 import { Header } from 'semantic-ui-react';
 
@@ -123,7 +123,7 @@ const emergencyContact = [
 
 const schoolInformation = (schoolOptions) => [
   <Header {...headerProps} content='School Information' />,
-  <Form.Select search required name='school' 
+  <Form.Select search required lazyLoad name='school' 
     label={
       <label>
         What school do you attend? <br />
@@ -177,7 +177,7 @@ const professional = [
     options={employmentOptions} />,
   <strong>Resume*</strong>,
   <div style={{marginBottom: 16}}>
-    <a target='_blank' href='https://www.dropbox.com/request/coJAsPaT5lCMut1TXpNJ'>
+    <a rel='noopener noreferrer' target='_blank' href='https://www.dropbox.com/request/coJAsPaT5lCMut1TXpNJ'>
       Upload a resume
     </a>
     {' '}outlining any skills or experience you’d like to share. PDF preferred!
@@ -195,7 +195,7 @@ const legal = [
     validationErrors={checkboxErrors}
     label={<label>
       I have read and agree to the terms of the{' '} 
-      <a target='_blank' href='http://static.mlh.io/docs/mlh-code-of-conduct.pdf'>
+      <a rel='noopener noreferrer' target='_blank' href='http://static.mlh.io/docs/mlh-code-of-conduct.pdf'>
         Major League Hacking Code of Conduct.
       </a>
     </label>}
@@ -206,11 +206,11 @@ const legal = [
     validationErrors={checkboxErrors}
     label={<label>
       I have read and agree to the terms of both the{' '}
-      <a target='_blank' href='https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions'>
+      <a rel='noopener noreferrer' target='_blank' href='https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions'>
         MLH Contest Terms and Conditions
       </a>
       {' '}and the{' '}
-      <a target='_blank' href='https://mlh.io/privacy'>
+      <a rel='noopener noreferrer' target='_blank' href='https://mlh.io/privacy'>
         MLH Privacy Policy.
       </a>
       {' '}Please note that you may receive pre and post-event informational e-mails and occasional messages about hackathons from MLH as per the MLH Privacy Policy.
@@ -222,7 +222,7 @@ const legal = [
     validationErrors={checkboxErrors}
     label={<label>
       I have read and agree to the terms of the{' '}
-      <a target='_blank' href='https://bit.camp/terms-code-waiver.pdf'>
+      <a rel='noopener noreferrer' target='_blank' href='https://bit.camp/terms-code-waiver.pdf'>
         Bitcamp Terms, Code of Conduct, and Release Waiver.
       </a>
     </label>}
@@ -238,10 +238,6 @@ const additional = [
 
 @observer
 class ApplicationForm extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleValidSubmit = async (formData) => {
     const success = this.props.onSubmit(formData);
     if (success) {
