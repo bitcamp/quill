@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Image, Menu, Icon } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 
 const MenuItemLink = (props) => {
   const { to, children } = props;
