@@ -1,7 +1,8 @@
 const mongoose   = require('mongoose'),
       bcrypt     = require('bcrypt-nodejs'),
       validator  = require('validator'),
-      jwt        = require('jsonwebtoken');
+      jwt        = require('jsonwebtoken'),
+      crypto     = require('crypto'),
       JWT_SECRET = process.env.JWT_SECRET;
 
 const profile = {
@@ -334,8 +335,7 @@ schema.methods.generateAuthToken = function(){
 
 // Generate temp login code
 schema.methods.generateTempCode = function() {
-  // TOOD: way to generate a random code securely?
-  return "TEST";
+  return crypto.randomBytes(4).toString("hex");
 }
 
 // Validate temp login code

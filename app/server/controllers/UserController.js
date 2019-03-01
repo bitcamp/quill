@@ -89,7 +89,17 @@ UserController.loginWithTempCode = function(email, code, callback) {
       const token = user.generateAuthToken();
       let u = user.toJSON();
 
-      return callback(null, token, u);
+      // Expire code
+      User.findOneAndUpdate({
+        'email': email,
+      },
+      {
+        $set: {
+          'loginCodeExpiration': Date.now(),
+        }
+      }, function(err, user) {
+        return callback(null, token, u);
+      });
   });
 };
 
