@@ -1,12 +1,12 @@
 import React from 'react';
 import Page from '../layouts/Page';
-import AdminForm from '../components/AdminForm';
+import SettingForm from '../components/SettingsForm';
 
 class Admin extends React.Component {
   render() {
     return (
       <Page title="God Mode">
-         <AdminForm/>
+         <SettingForm/>
       </Page>
     );
   }
