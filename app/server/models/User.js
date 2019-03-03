@@ -2,7 +2,10 @@ const mongoose   = require('mongoose'),
       bcrypt     = require('bcrypt-nodejs'),
       validator  = require('validator'),
       jwt        = require('jsonwebtoken'),
+<<<<<<< 76b2cd3fed24796977881d55014e753370b99e43
       crypto     = require('crypto'),
+=======
+>>>>>>> adding hackathon events minimal implementation
       JWT_SECRET = process.env.JWT_SECRET;
 
 const profile = {
@@ -109,7 +112,7 @@ const profile = {
   interestedIn: {
     type: String,
     enum: {
-      values: 'Internship Full-Time None'.split(' '),
+      values: 'internship full-time none'.split(' '),
     }
   },
   github: {
@@ -304,6 +307,11 @@ let schema = new mongoose.Schema({
     type: Number,
     required: false,
     default: Date.now(),
+  },
+
+  favoritedEvents: {
+    type: [mongoose.Schema.Types.ObjectId],
+    default: [],
   }
 });
 

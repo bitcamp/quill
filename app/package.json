@@ -14,7 +14,7 @@
     "jsonwebtoken": "5.0.4",
     "method-override": "^2.3.5",
     "moment": "^2.10.3",
-    "mongoose": "^4.1.2",
+    "mongoose": "^4.13.18",
     "morgan": "^1.6.1",
     "nodemailer": "^1.4.0",
     "nodemailer-smtp-transport": "^1.0.3",
@@ -32,6 +32,7 @@
     "postinstall": "npm run build"
   },
   "devDependencies": {
+    "eslint": "5.14.1",
     "nodemon": "1.2.1",
     "bower": "1.8.4",
     "gulp": "3.9.1",
