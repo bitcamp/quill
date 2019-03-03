@@ -15,6 +15,7 @@ const database        = process.env.DATABASE || process.env.MONGODB_URI || "mong
 // Create default admin user and settings on first startup
 const settingsConfig  = require('./server/config/settings');
 const adminConfig     = require('./server/config/admin');
+const eventConfig     = require('./server/config/events');
 
 // Create the app and apply middleware
 const app             = express();

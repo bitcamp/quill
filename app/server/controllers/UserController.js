@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Settings = require('../models/Settings');
+const Event = require('../models/Event');
 const Mailer = require('../services/email');
 const Stats = require('../services/stats');
 
@@ -167,7 +168,7 @@ UserController.loginWithPassword = function(email, password, callback){
   User
     .findOneByEmail(email)
     .select('+password')
-    .exec((err, user) => {
+    .exec(function(err, user) {
       if (err) {
         return callback(err);
       }
@@ -214,7 +215,7 @@ UserController.createUser = function(email, password, callback) {
 
     User
       .findOneByEmail(email)
-      .exec((err, user) => {
+      .exec(function(err, user) {
         if (err) {
           return callback(err);
         }
@@ -442,6 +443,45 @@ UserController.declineById = function (id, callback){
   const options = { new: true };
   User.findOneAndUpdate(conditions, update, options, callback);
 };
+
+UserController.favoriteEvent = function (id, eventId, callback) {
+  User.findById(id, function(err, user) {
+    if (err) {
+      return callback(err);
+    }
+    if (!user) {
+      return callback({message: 'We could not find this user'});
+    }
+
+    if (user.favoritedEvents.some(function(favoritedEventId) {
+      return favoritedEventId.equals(eventId);
+    })) {
+      console.log('includes');
+      return callback({message: 'You have already favorited this event'});
+    }
+
+    User.update(
+      {_id: id},
+      {$push: {favoritedEvents: eventId}}, 
+      function (err, user) {
+        if (err) {
+          return callback(err);
+        }
+
+        // TODO: rollback user update if event update fails
+        Event
+          .findOneAndUpdate(
+            {_id: eventId},
+            {$inc: {'numFavorited': 1}},
+            function(err, _event) {
+              if (err) {
+                return callback(err);
+              }
+              return callback(null, user);
+            })
+      })
+  });
+}
 
 /**
  * Verify a user's email based on an email verification token.

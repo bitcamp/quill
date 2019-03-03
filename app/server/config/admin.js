@@ -1,8 +1,8 @@
 // Create a default admin user.
 const User = require('../models/User');
 
-ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-ADMIN_PASSWORD = process.env.ADMIN_PASS;
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+const ADMIN_PASSWORD = process.env.ADMIN_PASS;
 
 const adminUserQuery = {email: ADMIN_EMAIL};
 const createAdminUser = (_, user) => {
