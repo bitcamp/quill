@@ -462,7 +462,7 @@ UserController.favoriteEvent = function (id, eventId, callback) {
 
     User.update(
       {_id: id},
-      {$push: {favoritedEvents: eventId}}, 
+      {$push: {favoritedEvents: eventId}},
       function (err, user) {
         if (err) {
           return callback(err);
@@ -482,6 +482,84 @@ UserController.favoriteEvent = function (id, eventId, callback) {
       })
   });
 }
+
+UserController.unfavoriteEvent = function (id, eventId, callback) {
+  User.findById(id, function(err, user) {
+    if (err) {
+      return callback(err);
+    }
+    if (!user) {
+      return callback({message: 'We could not find this user'});
+    }
+
+    if (!user.favoritedEvents.some(function(favoritedEventId) {
+      return favoritedEventId.equals(eventId);
+    })) {
+      console.log('includes');
+      return callback({message: 'You have already favorited this event'});
+    }
+
+    User.update(
+      {_id: id},
+      {$pull: {favoritedEvents: eventId}},
+      function (err, user) {
+        if (err) {
+          return callback(err);
+        }
+
+        // TODO: rollback user update if event update fails
+        Event
+          .findOneAndUpdate(
+            {_id: eventId},
+            {$inc: {'numFavorited': -1}},
+            function(err, _event) {
+              if (err) {
+                return callback(err);
+              }
+              return callback(null, user);
+            })
+      })
+  });
+}
+
+/*UserController.unfavoriteEvent = function (id, eventId, callback) {
+  User.findById(id, function(err, user) {
+    if (err) {
+      return callback(err);
+    }
+    if (!user) {
+      return callback({message: 'We could not find this user'});
+    }
+
+    if (!user.favoritedEvents.some(function(favoritedEventId) {
+      return favoritedEventId.equals(eventId);
+    }))) {
+      console.log('does not include');
+      return callback({message: 'You never favorited this event'});
+    }
+
+    User.update(
+      {_id: id},
+      {$pull: {favoritedEvents: eventId}},
+      function (err, user) {
+        if (err) {
+          return callback(err);
+        }
+
+        // TODO: rollback user update if event update fails
+        Event
+          .findOneAndUpdate(
+            {_id: eventId},
+            {$inc: {'numFavorited': -1}},
+            function(err, _event) {
+              if (err) {
+                return callback(err);
+              }
+              return callback(null, user);
+            })
+      })
+  });
+}*/
 
 /**
  * Verify a user's email based on an email verification token.

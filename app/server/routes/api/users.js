@@ -75,7 +75,7 @@ router.post('/:id/decline', isOwnerOrAdmin, function (req, res) {
 
 /**
  * [OWNER/ADMIN]
- * 
+ *
  * POST - Favorite an event
  */
 router.post('/:id/favoriteEvent/:eventId', isOwnerOrAdmin, function(req, res) {
@@ -83,6 +83,18 @@ router.post('/:id/favoriteEvent/:eventId', isOwnerOrAdmin, function(req, res) {
   const eventId = req.params.eventId;
 
   UserController.favoriteEvent(id, eventId, defaultResponse(req, res));
+});
+
+/**
+ * [OWNER/ADMIN]
+ *
+ * POST - Unfavorite an event
+ */
+router.post('/:id/unfavoriteEvent/:eventId', isOwnerOrAdmin, function(req, res) {
+  const id = req.params.id;
+  const eventId = req.params.eventId;
+
+  UserController.unfavoriteEvent(id, eventId, defaultResponse(req, res));
 });
 
 /**
