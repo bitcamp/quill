@@ -415,6 +415,12 @@ schema.statics.findOneByEmail = function(email){
   });
 };
 
+schema.statics.findOneAndDeleteByEmail = function(email){
+  return this.findOneAndRemove({
+    email: email.toLowerCase()
+  });
+};
+
 /**
  * Get a single user using a signed token.
  * @param  {String}   token    User's authentication token.
