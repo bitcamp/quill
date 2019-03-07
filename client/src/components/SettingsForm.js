@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Form } from 'formsy-semantic-ui-react';
 import DefaultForm from '../util/DefaultForm';
 import { Header, Segment } from 'semantic-ui-react';
+import { DateTimeInput} from 'semantic-ui-calendar-react';
 
 const headerProps = { as: 'h2', color: 'blue', textAlign: 'center' };
 
@@ -13,6 +14,13 @@ const openClose = [
         Users will be able to register new accounts within the time period specified.
       </div>
       <Form.Input name='Opens' label='Opens:'/>
+        <DateTimeInput
+          name="dateTime"
+          placeholder="Date/Time"
+          // value={this.state.dateTime}
+          iconPosition="left"
+          // onChange={this.handleChange}
+        />
       <Form.Input name='Closes' label='Opens:'/>
 
       <Form.Button content="Update" color="orange"/>
@@ -51,22 +59,62 @@ const waitlist = [
 
 @observer
 class SettingsForm extends Component {
-  handleValidSubmit = async (formData) => {
-    const success = this.props.onSubmit(formData);
-    if (success) {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      dateTime: ''
+    };
+  }
+
+  handleChange = (event, {name, value}) => {
+    if (this.state.hasOwnProperty(name)){
+      this.setState({ [name]: value});
     }
   }
 
+  handleValidSubmit = async (formData) => {
+    console.log(this.props);
+    const success = this.props.onSubmit(formData);
+    if (success) {
+      
+    }
+  }
+
+  updateOpenTime = async (times) => {
+    console.log('trying to update profile');
+    const success = await this.props.store.updateRegistrationTimes(times);
+
+    if (success) {
+      this.setState({ showModal: true });
+    }
+  }
+  
   render = () => (
-    <DefaultForm
-      onValidSubmit={this.handleValidSubmit} 
-      >
-      {openClose}
-      {confirmation}
-      {additional}
-      {waitlist}
-    </DefaultForm>
+    <div>
+      <DefaultForm
+        onValidSubmit={this.updateOpenTime} 
+        >
+        {openClose}
+        <DateTimeInput
+          name="dateTime"
+          placeholder="Date/Time"
+          value={this.state.dateTime}
+          iconPosition="left"
+          onChange={this.handleChange}
+        />
+      </DefaultForm>
+
+
+      <DefaultForm
+        onValidSubmit={this.handleValidSubmit} 
+        >
+        {confirmation}
+      </DefaultForm>
+
+        {/* {additional} */}
+        {/* {waitlist} */}
+    </div>
   )
 }
 
