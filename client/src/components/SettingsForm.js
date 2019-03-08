@@ -3,29 +3,30 @@ import { observer } from 'mobx-react';
 import { Form } from 'formsy-semantic-ui-react';
 import DefaultForm from '../util/DefaultForm';
 import { Header, Segment } from 'semantic-ui-react';
-import { DateTimeInput} from 'semantic-ui-calendar-react';
+import * as SettingsService from '../services/SettingsService';
+import Registration from '../components/Settings/Registration.js'
 
 const headerProps = { as: 'h2', color: 'blue', textAlign: 'center' };
 
-const openClose = [
-    <Segment>
-      <Header content = 'Open/Close Registration' />
-      <div style={{marginBottom: 5}}>
-        Users will be able to register new accounts within the time period specified.
-      </div>
-      <Form.Input name='Opens' label='Opens:'/>
-        <DateTimeInput
-          name="dateTime"
-          placeholder="Date/Time"
-          // value={this.state.dateTime}
-          iconPosition="left"
-          // onChange={this.handleChange}
-        />
-      <Form.Input name='Closes' label='Opens:'/>
+// const openClose = [
+//     <Segment>
+//       <Header content = 'Open/Close Registration' />
+//       <div style={{marginBottom: 5}}>
+//         Users will be able to register new accounts within the time period specified.
+//       </div>
+//       <Form.Input name='Opens' label='Opens:'/>
+//         <DateTimeInput
+//           name="dateTime"
+//           placeholder="Date/Time"
+//           // value={this.state.dateTime}
+//           iconPosition="left"
+//           // onChange={this.handleChange}
+//         />
+//       <Form.Input name='Closes' label='Opens:'/>
 
-      <Form.Button content="Update" color="orange"/>
-    </Segment>
-]
+//       <Form.Button content="Update" color="orange"/>
+//     </Segment>
+// ]
 
 const confirmation = [
     <Segment>
@@ -73,44 +74,34 @@ class SettingsForm extends Component {
     }
   }
 
-  handleValidSubmit = async (formData) => {
-    console.log(this.props);
-    const success = this.props.onSubmit(formData);
-    if (success) {
-      
-    }
+  handleRegistrationTimes = async () => {
+    console.log(this.state);
+    const success = SettingsService.updateRegistrationTimes(this.state.dateTime, this.state.dateTime)
   }
 
-  updateOpenTime = async (times) => {
-    console.log('trying to update profile');
-    const success = await this.props.store.updateRegistrationTimes(times);
-
-    if (success) {
-      this.setState({ showModal: true });
-    }
-  }
-  
   render = () => (
     <div>
-      <DefaultForm
-        onValidSubmit={this.updateOpenTime} 
+      {/* <DefaultForm
+        onValidSubmit={this.handleRegistrationTimes}
         >
-        {openClose}
         <DateTimeInput
           name="dateTime"
           placeholder="Date/Time"
           value={this.state.dateTime}
           iconPosition="left"
           onChange={this.handleChange}
-        />
-      </DefaultForm>
+        /> 
+        <Form.Button content="Update" color="orange"/>
 
+      </DefaultForm> */}
+      <Registration>
+      </Registration>
 
-      <DefaultForm
+      {/* <DefaultForm
         onValidSubmit={this.handleValidSubmit} 
         >
         {confirmation}
-      </DefaultForm>
+      </DefaultForm> */}
 
         {/* {additional} */}
         {/* {waitlist} */}
