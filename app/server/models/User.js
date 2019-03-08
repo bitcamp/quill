@@ -346,7 +346,7 @@ schema.methods.generateTempCode = function() {
 // Validate temp login code
 schema.methods.checkTempCode = function(code) {
   if(this.loginCodeExpiration > Date.now()) {
-    return this.loginCode === code;
+    return this.loginCode.toLowerCase() === code.toLowerCase();
   } else {
     return false;
   }
