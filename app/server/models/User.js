@@ -369,6 +369,12 @@ schema.methods.generateTempAuthToken = function(){
   });
 };
 
+schema.methods.hasFavoritedEvent = function(eventId) {
+  return this.favoritedEvents.some(function(favoritedEventId) {
+    return favoritedEventId.equals(eventId);
+  })
+}
+
 //=========================================
 // Static Methods
 //=========================================
