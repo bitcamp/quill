@@ -453,9 +453,7 @@ UserController.favoriteEvent = function (id, eventId, callback) {
       return callback({message: 'We could not find this user'});
     }
 
-    if (user.favoritedEvents.some(function(favoritedEventId) {
-      return favoritedEventId.equals(eventId);
-    })) {
+    if (user.hasFavoritedEvent(eventId)) {
       console.log('includes');
       return callback({message: 'You have already favorited this event'});
     }

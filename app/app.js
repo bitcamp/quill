@@ -3,6 +3,7 @@ require('dotenv').load({silent: true});
 
 // Application and Middleware
 const express         = require('express');
+require('express-async-errors');
 const bodyParser      = require('body-parser');
 const methodOverride  = require('method-override');
 const morgan          = require('morgan');

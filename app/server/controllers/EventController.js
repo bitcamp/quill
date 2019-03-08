@@ -1,4 +1,5 @@
 const Event = require('../models/Event');
+const User = require('../models/User');
 
 class EventController {
   async getAll() {
@@ -11,6 +12,84 @@ class EventController {
     return await Event
       .findById(id)
       .exec();
+  }
+
+  async favoriteEventByFirebaseId(userId, firebaseId) {
+    const user = await User.findById(userId).exec();
+    if (!user) {
+      console.log("User not found");
+      throw Error("User not found");
+    }
+
+    let event = await Event.findOne({firebaseId});
+    if (!event) {
+      console.log("Firebase event does not already exist, creating it");
+      event = new Event({firebaseId});
+      await event.save();
+    }
+
+    if (user.hasFavoritedEvent(event.id)) {
+      console.log("Already favorited");
+      throw Error("You have already favorited this event");
+    }
+    
+    await User.
+      updateOne(
+        {_id: userId},
+        {$push: {favoritedEvents: event.id}}
+      )
+      .exec();
+    
+    await Event
+      .findOneAndUpdate(
+        {_id: event.id},
+        {$inc: {'numFavorited': 1}},
+      )
+      .exec();
+    
+    return {
+      user: await User.findById(userId),
+      event: await Event.findById(event.id),
+    }
+  }
+
+  async unfavoriteEventByFirebaseId(userId, firebaseId) {
+    const user = await User.findById(userId).exec();
+    if (!user) {
+      console.log("User not found");
+      throw Error("User not found");
+    }
+
+    let event = await Event.findOne({firebaseId});
+    if (!event) {
+      console.log("Firebase event does not already exist, creating it");
+      event = new Event({firebaseId});
+      await event.save();
+    }
+
+    if (!user.hasFavoritedEvent(event.id)) {
+      console.log("Already favorited");
+      throw Error("You have not already favorited this event");
+    }
+    
+    await User.
+      updateOne(
+        {_id: userId},
+        {$pull: {favoritedEvents: event.id}}
+      )
+      .exec();
+    
+    await Event
+      .findOneAndUpdate(
+        {_id: event.id},
+        {$inc: {'numFavorited': -1}},
+      )
+      .exec();
+    
+    return {
+      user: await User.findById(userId),
+      event: await Event.findById(event.id),
+    }
   }
 
   async createEvent(eventData) {
