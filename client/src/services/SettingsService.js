@@ -1,5 +1,5 @@
 const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3001";
-const SETTINGS_URL = BASE_URL + "/api";
+const SETTINGS_URL = BASE_URL + "/api/settings";
 
 export const getPublicSettings = async () => {
   const url = SETTINGS_URL;
@@ -17,7 +17,7 @@ export const getPublicSettings = async () => {
 };
 
 export const updateRegistrationTimes = async (open, close) => {
-  const url = SETTINGS_URL+ `/settings/times`;
+  const url = SETTINGS_URL+ `/times`;
   const data = { 
       timeOpen: open,
       timeClose: close,          
@@ -28,6 +28,7 @@ export const updateRegistrationTimes = async (open, close) => {
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
+      'x-access-token': token,
     },
     body: JSON.stringify(data),
   };

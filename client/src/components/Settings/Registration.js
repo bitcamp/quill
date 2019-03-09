@@ -24,20 +24,32 @@ class Registration extends Component {
     }
   }
 
+  cleanDate = (date) => {
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes()
+    )
+  }
+
   handleRegistrationTimes = async () => {
     console.log(this.state);
 
-    const openTime = new Date(this.state.openDateTime);
-    const closeTime = new Date(this.state.closeDateTime);
+    const openTime = this.cleanDate(new Date(this.state.openDateTime)).getTime();
+    const closeTime = this.cleanDate(new Date(this.state.closeDateTime)).getTime();
+    // const openTime = new Date(this.state.openDateTime).getTime();
+    // const closeTime = new Date(this.state.closeDateTime).getTime();
 
-
+    console.log(openTime);
+    console.log(closeTime);
     if (closeTime < openTime){
         console.log("Start cannot be after end");
         return;
     }
-    // Date open = new Date
 
-    const success = SettingsService.updateRegistrationTimes(this.state.openDateTime, this.state.closeDateTime)
+    const success = SettingsService.updateRegistrationTimes(openTime, closeTime); 
   }
 
   render = () => (
@@ -57,6 +69,7 @@ class Registration extends Component {
                 value={this.state.openDateTime}
                 iconPosition="left"
                 onChange={this.handleChange}
+                dateFormat="MM-DD-YYYY"
             />
 
             <Header as="h5">Closes:</Header>
@@ -66,25 +79,11 @@ class Registration extends Component {
                 value={this.state.closeDateTime}
                 iconPosition="left"
                 onChange={this.handleChange}
+                dateFormat="MM-DD-YYYY"
             />
 
             <Form.Button content="Update" color="orange"/>
         </Segment>
-        {/* <DateTimeInput
-          name="openDateTime"
-          placeholder="Date/Time"
-          value={this.state.dateTime}
-          iconPosition="left"
-          onChange={this.handleChange}
-        /> 
-        <DateTimeInput
-          name="closeDateTime"
-          placeholder="Date/Time"
-          value={this.state.dateTime}
-          iconPosition="left"
-          onChange={this.handleChange}
-        />  */}
-
       </DefaultForm>
 
   )

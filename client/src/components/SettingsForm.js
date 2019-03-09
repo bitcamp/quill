@@ -1,32 +1,12 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Form } from 'formsy-semantic-ui-react';
-import DefaultForm from '../util/DefaultForm';
 import { Header, Segment } from 'semantic-ui-react';
-import * as SettingsService from '../services/SettingsService';
+// import * as SettingsService from '../services/SettingsService';
 import Registration from '../components/Settings/Registration.js'
 
 const headerProps = { as: 'h2', color: 'blue', textAlign: 'center' };
 
-// const openClose = [
-//     <Segment>
-//       <Header content = 'Open/Close Registration' />
-//       <div style={{marginBottom: 5}}>
-//         Users will be able to register new accounts within the time period specified.
-//       </div>
-//       <Form.Input name='Opens' label='Opens:'/>
-//         <DateTimeInput
-//           name="dateTime"
-//           placeholder="Date/Time"
-//           // value={this.state.dateTime}
-//           iconPosition="left"
-//           // onChange={this.handleChange}
-//         />
-//       <Form.Input name='Closes' label='Opens:'/>
-
-//       <Form.Button content="Update" color="orange"/>
-//     </Segment>
-// ]
 
 const confirmation = [
     <Segment>
@@ -61,8 +41,14 @@ const waitlist = [
 @observer
 class SettingsForm extends Component {
 
+  constructor(props){
+    super(props);
+  }
+
   render = () => (
     <div>
+      {console.log("yuh yuh yuh")}
+      {console.log(this.props)}
       <Registration>
       </Registration>
 
