@@ -9,13 +9,12 @@ import ActionModal from '../../components/ActionModal';
 
 @inject('store')
 @observer
-class Registration extends Component {
+class Confirmation extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-      openDateTime: '',
-      closeDateTime: '',
+      confirmDateTime: '',
       showModal: false
     };
   }
@@ -27,14 +26,8 @@ class Registration extends Component {
   }
 
   handleSubmit = async () => {
-    const openTime = new Date(this.state.openDateTime).getTime();
-    const closeTime = new Date(this.state.closeDateTime).getTime();
-
-    if (closeTime < openTime){
-        console.log("Start cannot be after end");
-        return;
-    }
-    const success = await this.props.store.updateRegistrationTimes(openTime, closeTime);
+    const confirmTime = new Date(this.state.confirmDateTime).getTime();
+    const success = await this.props.store.updateConfirmationTime(confirmTime);
 
     if (success) {
       this.setState({ showModal: true });
@@ -49,7 +42,7 @@ class Registration extends Component {
         as='span'
         open={this.state.showModal}
         header='Awesome!'
-        content='Registration times have been updated!'
+        content='Confirmation date/time has been updated!'
         action={this.goToDashboard}
       />
  
@@ -57,26 +50,16 @@ class Registration extends Component {
         onValidSubmit={this.handleSubmit}
         >
         <Segment>
-            <Header content = 'Open/Close Registration' />
+            <Header content = 'Confirmation Date' />
             <div style={{marginBottom: 5}}>
-                Users will be able to register new accounts within the time period specified.
+              Any users that are accepted will have to confirm by the date selected.
             </div>
 
-            <Header as="h5">Opens:</Header>
+            <Header as="h5">Confirm By:</Header>
             <DateTimeInput
-                name="openDateTime"
-                placeholder="Open Date/Time"
-                value={this.state.openDateTime}
-                iconPosition="left"
-                onChange={this.handleChange}
-                dateFormat="MM-DD-YYYY"
-            />
-
-            <Header as="h5">Closes:</Header>
-            <DateTimeInput
-                name="closeDateTime"
-                placeholder="Close Date/Time"
-                value={this.state.closeDateTime}
+                name="confirmDateTime"
+                placeholder="Confirmation Date/Time"
+                value={this.state.confirmDateTime}
                 iconPosition="left"
                 onChange={this.handleChange}
                 dateFormat="MM-DD-YYYY"
@@ -89,5 +72,5 @@ class Registration extends Component {
   )
 }
 
-export default Registration;
+export default Confirmation;
 

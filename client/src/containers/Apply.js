@@ -23,6 +23,7 @@ class Apply extends React.Component {
   goToDashboard = () => this.props.history.push('/');
 
   render() {
+    console.log(this.props);
     const { profile } = this.props.store.user;
     return (
       <Page title="Application">

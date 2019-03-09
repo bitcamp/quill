@@ -16,7 +16,7 @@ export const getPublicSettings = async () => {
   return response;
 };
 
-export const updateRegistrationTimes = async (open, close) => {
+export const updateRegistrationTimes = async (token, open, close) => {
   const url = SETTINGS_URL+ `/times`;
   const data = { 
       timeOpen: open,
@@ -36,7 +36,7 @@ export const updateRegistrationTimes = async (open, close) => {
   return response;
 };
 
-export const updateConfirmationTime = async (time) => {
+export const updateConfirmationTime = async (token, time) => {
   const url = SETTINGS_URL+ `/confirm-by`;
   const data = { 
       time: time,          
@@ -47,6 +47,7 @@ export const updateConfirmationTime = async (time) => {
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
+      'x-access-token': token,
     },
     body: JSON.stringify(data),
   };

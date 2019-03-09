@@ -1,6 +1,7 @@
 import { action, observable, computed } from 'mobx';
 import * as AuthService from '../services/AuthService';
 import * as UserService from '../services/UserService';
+import * as SettingsService from '../services/SettingsService';
 
 export default class AppStore {
   @observable token = null;
@@ -217,5 +218,57 @@ export default class AppStore {
         type: 'error',
       });
     }
+  }
+
+  @action updateRegistrationTimes = async (openTime, closeTime) => { 
+    this.loading = true;
+    const response = await SettingsService.updateRegistrationTimes(this.token, openTime, closeTime);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      this.messages.push({
+        text: 'Registration times was updated successfully',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+    
+    return false;
+  }
+
+  @action updateConfirmationTime = async (confirmTime) => { 
+    this.loading = true;
+    const response = await SettingsService.updateConfirmationTime(this.token, confirmTime);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      this.messages.push({
+        text: 'Confirmation date/time was updated successfully',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+    
+    return false;
   }
 }
