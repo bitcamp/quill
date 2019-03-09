@@ -61,50 +61,11 @@ const waitlist = [
 @observer
 class SettingsForm extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      dateTime: ''
-    };
-  }
-
-  handleChange = (event, {name, value}) => {
-    if (this.state.hasOwnProperty(name)){
-      this.setState({ [name]: value});
-    }
-  }
-
-  handleRegistrationTimes = async () => {
-    console.log(this.state);
-    const success = SettingsService.updateRegistrationTimes(this.state.dateTime, this.state.dateTime)
-  }
-
   render = () => (
     <div>
-      {/* <DefaultForm
-        onValidSubmit={this.handleRegistrationTimes}
-        >
-        <DateTimeInput
-          name="dateTime"
-          placeholder="Date/Time"
-          value={this.state.dateTime}
-          iconPosition="left"
-          onChange={this.handleChange}
-        /> 
-        <Form.Button content="Update" color="orange"/>
-
-      </DefaultForm> */}
       <Registration>
       </Registration>
 
-      {/* <DefaultForm
-        onValidSubmit={this.handleValidSubmit} 
-        >
-        {confirmation}
-      </DefaultForm> */}
-
-        {/* {additional} */}
-        {/* {waitlist} */}
     </div>
   )
 }
