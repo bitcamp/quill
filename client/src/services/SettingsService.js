@@ -55,7 +55,7 @@ export const updateConfirmationTime = async (token, time) => {
   return response;
 };
 
-export const updateWaitlistText= async (text) => {
+export const updateWaitlistText= async (token, text) => {
   const url = SETTINGS_URL+ `/waitlist`;
   const data = { 
       text: text,          
@@ -66,6 +66,7 @@ export const updateWaitlistText= async (text) => {
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
+      'x-access-token': token,
     },
     body: JSON.stringify(data),
   };
@@ -73,7 +74,7 @@ export const updateWaitlistText= async (text) => {
   return response;
 };
 
-export const updateAcceptanceText = async (text) => {
+export const updateAcceptanceText = async (token, text) => {
   const url = SETTINGS_URL+ `/acceptance`;
   const data = { 
       text: text,          
@@ -84,6 +85,7 @@ export const updateAcceptanceText = async (text) => {
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
+      'x-access-token': token,
     },
     body: JSON.stringify(data),
   };
@@ -91,7 +93,7 @@ export const updateAcceptanceText = async (text) => {
   return response;
 };
 
-export const updateConfirmationText = async (text) => {
+export const updateConfirmationText = async (token, text) => {
   const url = SETTINGS_URL+ `/confirmation`;
   const data = { 
       text: text,          
@@ -102,6 +104,7 @@ export const updateConfirmationText = async (text) => {
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
+      'x-access-token': token,
     },
     body: JSON.stringify(data),
   };
@@ -109,7 +112,7 @@ export const updateConfirmationText = async (text) => {
   return response;
 };
 
-export const updateAllowMinors = async (allowMinors) => {
+export const updateAllowMinors = async (token, allowMinors) => {
   const url = SETTINGS_URL+ `/minors`;
   const data = { 
       allowMinors: allowMinors,          
@@ -120,6 +123,7 @@ export const updateAllowMinors = async (allowMinors) => {
     cache: 'no-cache',
     headers: {
       'Content-Type': 'application/json',
+      'x-access-token': token,
     },
     body: JSON.stringify(data),
   };

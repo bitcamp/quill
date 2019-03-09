@@ -271,4 +271,63 @@ export default class AppStore {
     
     return false;
   }
+
+  @action updateAllowMinors = async (allow) => { 
+    this.loading = true;
+    const response = await SettingsService.updateAllowMinors(this.token, allow);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      if (allow === true){
+        this.messages.push({
+          text: 'Minors are now allowed to register.',
+          type: 'success',
+        });
+      } else {
+        this.messages.push({
+          text: 'Minors are no longer allowed to register.',
+          type: 'success',
+        });
+      }
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+    
+    return false;
+  }
+
+  @action updateWaitlistText = async (text) => { 
+    this.loading = true;
+    const response = await SettingsService.updateWaitlistText(this.token, text);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      this.messages.push({
+        text: 'Waitlist text was updated successfully',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+    
+    return false;
+  }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { inject, observer } from 'mobx-react';
 import { Form } from 'formsy-semantic-ui-react';
 import { Header, Segment} from 'semantic-ui-react';
@@ -7,6 +8,7 @@ import { DateTimeInput} from 'semantic-ui-calendar-react';
 import DefaultForm from '../../util/DefaultForm';
 import ActionModal from '../../components/ActionModal';
 
+@withRouter
 @inject('store')
 @observer
 class Registration extends Component {
@@ -41,8 +43,14 @@ class Registration extends Component {
     }
   }
 
-  goToDashboard = () => this.props.history.push('/');
-
+  toggleModal = () =>{
+    if (this.state.showModal){
+      this.setState({showModal: false});
+    } else {
+      this.setState({showModal: true})
+    }
+  }
+  
   render = () => (
     <div style={{marginBottom: 15}}>
       <ActionModal
@@ -50,7 +58,7 @@ class Registration extends Component {
         open={this.state.showModal}
         header='Awesome!'
         content='Registration times have been updated!'
-        action={this.goToDashboard}
+        action={this.toggleModal}
       />
  
       <DefaultForm
