@@ -310,6 +310,12 @@ let schema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     default: [],
   },
+
+  // TODO: Remove after Bitcamp 2019
+  favoritedFirebaseEvents: {
+    type: [String],
+    default: [],
+  },
 });
 
 schema.set('toJSON', {
@@ -372,6 +378,12 @@ schema.methods.generateTempAuthToken = function(){
 schema.methods.hasFavoritedEvent = function(eventId) {
   return this.favoritedEvents.some(function(favoritedEventId) {
     return favoritedEventId.equals(eventId);
+  })
+}
+
+schema.methods.hasFavoritedFirebaseEvent = function(firebaseId) {
+  return this.favoritedFirebaseEvents.some(function(favoritedEventId) {
+    return favoritedEventId === firebaseId;
   })
 }
 

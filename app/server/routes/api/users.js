@@ -1,6 +1,6 @@
 const express = require('express');
 const UserController = require('../../controllers/UserController');
-const EventController = require('../../controllers/EventController');
+const FirebaseEventController = require('../../controllers/FirebaseEventController');
 const { isAdmin,  isOwnerOrAdmin, defaultResponse } = require('./util');
 
 const router = express.Router({mergeParams: true});
@@ -103,10 +103,10 @@ router.post('/:id/favoriteFirebaseEvent/:firebaseId', isOwnerOrAdmin, async func
   const firebaseId = req.params.firebaseId;
 
   try {
-    const response = await EventController.favoriteEventByFirebaseId(userId, firebaseId);
+    const response = await FirebaseEventController
+      .favoriteByFirebaseId(userId, firebaseId);
     res.json(response);
   } catch (err) {
-    console.log(err);
     res.status(500).json({message: err.message});
   }
 });
@@ -116,10 +116,10 @@ router.post('/:id/unfavoriteFirebaseEvent/:firebaseId', isOwnerOrAdmin, async fu
   const firebaseId = req.params.firebaseId;
 
   try {
-    const response = await EventController.unfavoriteEventByFirebaseId(userId, firebaseId);
+    const response = await FirebaseEventController
+      .unfavoriteByFirebaseId(userId, firebaseId);
     res.json(response);
   } catch (err) {
-    console.log(err);
     res.status(500).json({message: err.message});
   }
 });
