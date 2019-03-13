@@ -16,8 +16,8 @@ const path = require('path'),
       EMAIL_USER = process.env.EMAIL_USER,
       EMAIL_PASS = process.env.EMAIL_PASS,
       EMAIL_PORT = process.env.EMAIL_PORT,
-      EMAIL_CONTACT = process.env.EMAIL_CONTACT,
-      EMAIL_HEADER_IMAGE = process.env.EMAIL_HEADER_IMAGE;
+      EMAIL_CONTACT = process.env.EMAIL_CONTACT;
+let   EMAIL_HEADER_IMAGE = process.env.EMAIL_HEADER_IMAGE;
 
 if(EMAIL_HEADER_IMAGE.indexOf("https") == -1){
   EMAIL_HEADER_IMAGE = ROOT_URL + EMAIL_HEADER_IMAGE;

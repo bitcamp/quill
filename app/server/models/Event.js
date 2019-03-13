@@ -19,9 +19,6 @@ const schema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-
-  // TODO: Get rid of this after this year
-  firebaseId: String,
 });
 
 schema.set('toJSON', { virtuals: true });

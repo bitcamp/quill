@@ -454,7 +454,6 @@ UserController.favoriteEvent = function (id, eventId, callback) {
     }
 
     if (user.hasFavoritedEvent(eventId)) {
-      console.log('includes');
       return callback({message: 'You have already favorited this event'});
     }
 
@@ -490,10 +489,7 @@ UserController.unfavoriteEvent = function (id, eventId, callback) {
       return callback({message: 'We could not find this user'});
     }
 
-    if (!user.favoritedEvents.some(function(favoritedEventId) {
-      return favoritedEventId.equals(eventId);
-    })) {
-      console.log('includes');
+    if (!user.hasFavoritedEvent()) {
       return callback({message: 'You did not have this event favorited'});
     }
 
