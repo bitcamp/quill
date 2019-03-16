@@ -11,13 +11,13 @@ import ActionModal from '../../components/ActionModal';
 @withRouter
 @inject('store')
 @observer
-class WaitText extends Component {
+class AcceptText extends Component {
 
   constructor(props){
     super(props);
     this.state = {
       showModal: false,
-      waitlist: '',
+      accept: '',
     };
   }
 
@@ -28,7 +28,7 @@ class WaitText extends Component {
   }
 
   handleSubmit = async (data) => {
-    const success = await this.props.store.updateWaitlistText(data.waitlist);
+    const success = await this.props.store.updateAcceptText(data.accept);
 
     if (success) {
       this.setState({ showModal: true });
@@ -49,22 +49,22 @@ class WaitText extends Component {
         as='span'
         open={this.state.showModal}
         header='Awesome!'
-        content='Waitlist text has been updated!'
+        content='Acceptance text has been updated!'
         action={this.toggleModal}
       />
  
       <DefaultForm onValidSubmit={this.handleSubmit}>
         <Segment>
-          <Header content = 'Waitlist Text' />
+          <Header content = 'Acceptance Text' />
           <Grid columns={2} divided>
             <Grid.Column>
-              <Form.TextArea name ='waitlist' onChange = {this.handleChange}
+              <Form.TextArea name ='accept' onChange = {this.handleChange}
                 style = {{ minHeight: 150}}/>
             </Grid.Column>
             <Grid.Column>
               <Segment>
               <Container text>
-                <ReactMarkdown source={this.state.waitlist}
+                <ReactMarkdown source={this.state.accept}
                   escapeHtml = {false}/>
               </Container>
               </Segment>
@@ -77,5 +77,5 @@ class WaitText extends Component {
   )
 }
 
-export default WaitText;
+export default AcceptText;
 

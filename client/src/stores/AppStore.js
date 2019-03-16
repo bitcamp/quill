@@ -330,4 +330,56 @@ export default class AppStore {
     
     return false;
   }
+
+  @action updateAcceptText = async (text) => { 
+    this.loading = true;
+    const response = await SettingsService.updateAcceptanceText(this.token, text);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      this.messages.push({
+        text: 'Acceptance text was updated successfully',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+    
+    return false;
+  }
+
+  @action updateConfirmText = async (text) => { 
+    this.loading = true;
+    const response = await SettingsService.updateConfirmationText(this.token, text);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      this.messages.push({
+        text: 'Confirmation text was updated successfully',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+    
+    return false;
+  }
 }

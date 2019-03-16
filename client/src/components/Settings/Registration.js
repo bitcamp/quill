@@ -32,10 +32,6 @@ class Registration extends Component {
     const openTime = new Date(this.state.openDateTime).getTime();
     const closeTime = new Date(this.state.closeDateTime).getTime();
 
-    if (closeTime < openTime){
-        console.log("Start cannot be after end");
-        return;
-    }
     const success = await this.props.store.updateRegistrationTimes(openTime, closeTime);
 
     if (success) {
