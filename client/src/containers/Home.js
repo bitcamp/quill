@@ -104,6 +104,7 @@ class Home extends React.Component {
           header='Are you sure?'
           content="Once you decline, you will not be able to attend"
           action={this.decline}
+          close={() => this.setState({ showDeclineModal: false })}
         />
         <Dashboard 
           userData={userData}
