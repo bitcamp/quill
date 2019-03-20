@@ -3,14 +3,21 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import Page from '../layouts/Page';
 import Dashboard from '../components/Dashboard';
+import ActionModal from '../components/ActionModal';
 
 @withRouter
 @inject('store')
 @observer
 class Home extends React.Component {
+  state = { showDeclineModal: false }
 
   resendVerification = async () => {
     this.props.store.resendVerificationEmail();
+  }
+
+  decline = () => {
+    this.props.store.decline();
+    this.setState({ showDeclineModal: false });
   }
 
   render() {
@@ -60,10 +67,44 @@ class Home extends React.Component {
         buttonContent: 'Update Your Application',
         buttonAction: () => this.props.history.push('/apply'),
       };
+    } else if (user.status.name === 'admitted') {
+      dashboardProps = {
+        title: 'You need to confirm your attendance',
+        showButton: true,
+        buttonContent: [
+          'Confirm Your Spot', 
+          'Can\'t make it?'
+        ],
+        buttonAction: [
+          () => this.props.history.push('/confirm'),
+          () => this.setState({ showDeclineModal: true }),
+        ],
+      };
+    } else if (user.status.name === 'confirmed') {
+      dashboardProps = {
+        title: 'You have confirmed your attendance at Bitcamp 2019',
+        message: 'No further action is necessary',
+        showButton: true,
+        buttonContent: "Can't make it?",
+        buttonAction: () => this.setState({ showDeclineModal: true }),
+      };
+    } else if (user.status.name === 'declined') {
+      dashboardProps = {
+        title: 'You have declined your attendance at Bitcamp 2019',
+        message: "We hope you'll make it to Bitcamp 2020!",
+        showButton: false,
+      };
     }
 
     return (
       <Page title="Dashboard">
+        <ActionModal
+          as='span'
+          open={this.state.showDeclineModal}
+          header='Are you sure?'
+          content="Once you decline, you will not be able to attend"
+          action={this.decline}
+        />
         <Dashboard 
           userData={userData}
           {...dashboardProps}
