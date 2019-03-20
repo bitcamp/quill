@@ -197,6 +197,58 @@ export default class AppStore {
     return false;
   }
 
+  @action updateConfirmation = async (confirmation) => {
+    this.loading = true;
+    const response = await UserService.updateConfirmation(this.token, this.user._id, confirmation);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      this.messages.push({
+        text: 'Your confirmation was updated successfully',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+
+    return false;
+  }
+
+  @action decline = async () => {
+    this.loading = true;
+    const response = await UserService.decline(this.token, this.user._id);
+    this.loading = false;
+
+    if (response.ok) {
+      const responseJson = await response.json();
+      this.user = responseJson;
+      this.clearMessages();
+      this.messages.push({
+        text: 'You declined attendance',
+        type: 'success',
+      });
+      return true;
+    } else {
+      const responseJson = await response.json();
+      this.clearMessages();
+      this.messages.push({
+        text: responseJson['message'],
+        type: 'error',
+      });
+    }
+
+    return false;
+  }
+
   @action resendVerificationEmail = async (id) => {
     this.loading = true;
     const response = await AuthService.resendVerificationEmail(this.user._id);

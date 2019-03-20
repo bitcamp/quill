@@ -20,7 +20,7 @@ export default class PageLayout extends React.Component {
   render() {
     const isAdmin = this.props.store.adminLoggedIn;
     const canApply = this.props.store.user.verified || isAdmin;
-    const canConfirm = this.props.store.user.status.admitted || isAdmin;
+    const canConfirm = this.props.store.user.status.admitted && !this.props.store.user.status.declined || isAdmin;
 
     return (
       <div style={{minHeight: '100vh', height: 0, minWidth: '100vh'}} >
