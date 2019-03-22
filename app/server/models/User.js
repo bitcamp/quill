@@ -310,6 +310,11 @@ let schema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+
+  reimbursementLimit: {
+    type: Number,
+    default: 0,
+  },
 });
 
 schema.set('toJSON', {

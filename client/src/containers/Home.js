@@ -32,10 +32,12 @@ class Home extends React.Component {
     const name = user.status.completedProfile 
       ? `${user.profile.firstName} ${user.profile.lastName}`
       : user.email;
+    const reimbursementLimit = user.reimbursementLimit;
 
     const userData = {
       status,
       name,
+      reimbursementLimit,
     }
 
     let dashboardProps = { };
@@ -48,6 +50,7 @@ class Home extends React.Component {
         showButton: true,
         buttonContent: 'Resend Verification Email',
         buttonAction: this.resendVerification,
+        showReimbursement: false,
       };
     } else if (user.status.name === 'incomplete') {
       dashboardProps = {
@@ -55,7 +58,8 @@ class Home extends React.Component {
         message: 'Please complete your application to be considered for Bitcamp.',
         showButton: true,
         buttonContent: 'Apply Now',
-        buttonAction: () => this.props.history.push('/apply'),        
+        buttonAction: () => this.props.history.push('/apply'),
+        showReimbursement: false,        
       };
     } else if (user.status.name === 'submitted') {
       dashboardProps = {
@@ -66,6 +70,7 @@ class Home extends React.Component {
         showButton: true,
         buttonContent: 'Update Your Application',
         buttonAction: () => this.props.history.push('/apply'),
+        showReimbursement: false,
       };
     } else if (user.status.name === 'admitted') {
       dashboardProps = {
@@ -79,6 +84,7 @@ class Home extends React.Component {
           () => this.props.history.push('/confirm'),
           () => this.setState({ showDeclineModal: true }),
         ],
+        showReimbursement: true,
       };
     } else if (user.status.name === 'confirmed') {
       dashboardProps = {
@@ -87,12 +93,14 @@ class Home extends React.Component {
         showButton: true,
         buttonContent: "Can't make it?",
         buttonAction: () => this.setState({ showDeclineModal: true }),
+        showReimbursement: true,
       };
     } else if (user.status.name === 'declined') {
       dashboardProps = {
         title: 'You have declined your attendance at Bitcamp 2019',
         message: "We hope you'll make it to Bitcamp 2020!",
         showButton: false,
+        showReimbursement: false,
       };
     }
 

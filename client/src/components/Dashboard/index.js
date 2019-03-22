@@ -3,7 +3,7 @@ import { Header, Segment, Message, Button } from 'semantic-ui-react';
 
 export default class Dashboard extends React.Component {
   render() {
-    const { userData, title, message, showButton, buttonContent, buttonAction } = this.props;
+    const { userData, title, message, showButton, buttonContent, buttonAction, showReimbursement = true} = this.props;
     const { status, name } = userData;
 
     // TODO: Refactor this mess
@@ -21,6 +21,13 @@ export default class Dashboard extends React.Component {
       buttons = (<Header as='h5' textAlign='center'>{button}</Header>);
     }
 
+    // TODO: Refactor this mess too
+    let reimbursementMessage;
+    if (userData.reimbursementLimit && userData.reimbursementLimit !== 0) {
+      reimbursementMessage = `You have been approved for travel reimbursement up to $${userData.reimbursementLimit}`;
+    } else {
+      reimbursementMessage = "You are not approved for travel reimbursement";
+    }
 
     return (
       <Segment padded>
@@ -29,6 +36,11 @@ export default class Dashboard extends React.Component {
         <Message color='blue'>
           <Header as='h2' textAlign='center'>{status}</Header>
         </Message>
+        {
+          showReimbursement
+          ? <Message color='yellow'><Header as='h3' textAlign='center'>{reimbursementMessage}</Header></Message>
+          : null
+        }
         <Header as='h4' textAlign='center'>{title}</Header>
         <Header as='h5' textAlign='center'>{message}</Header>
         {buttons}
