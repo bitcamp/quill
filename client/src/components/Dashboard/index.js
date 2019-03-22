@@ -24,7 +24,7 @@ export default class Dashboard extends React.Component {
     // TODO: Refactor this mess too
     let reimbursementMessage;
     if (userData.reimbursementLimit && userData.reimbursementLimit !== 0) {
-      reimbursementMessage = `You have been approved for travel reimbursement up to $${userData.reimbursementLimit}`;
+      reimbursementMessage = `You have been approved for travel reimbursement up to $${userData.reimbursementLimit.toFixed(2)}`;
     } else {
       reimbursementMessage = "You are not approved for travel reimbursement";
     }
