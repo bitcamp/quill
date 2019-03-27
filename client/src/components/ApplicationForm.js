@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { addValidationRule } from 'formsy-react';
 import { Form } from 'formsy-semantic-ui-react';
-import { Label } from 'semantic-ui-react';
+import { Button, Label } from 'semantic-ui-react';
 import DefaultForm from '../util/DefaultForm';
 import { Header } from 'semantic-ui-react';
 
@@ -262,9 +262,14 @@ class ApplicationForm extends Component {
       
       <div>
         <Header {...headerProps} content='Design Den' />
-        Interested in Design Den?{' '}
-        <a target='_blank' href='https://bitcamp.typeform.com/to/tYvXRT'>Click here{' '}</a>
-        to apply!
+        <div><strong>What is Design Den?</strong></div>
+        <span>
+          Through this program, you will have the opportunity to submit a portfolio of your design work for the chance to participate in Bitcamp as a designer. You will act as a mentor and contributor to multiple teams at the event, while developing a portfolio of your designs (your Bitfolio) which will be judged at the end of the hackathon by design professionals.
+          To be considered for Design Den, please fill out the separate application in addition to this form.
+        </span>
+        <div><strong>Applications for Design Den are due by March 31st, 11:59PM EST</strong></div>
+        <br />
+        <Button color='blue' as='a' target='_blank' href='https://bitcamp.typeform.com/to/tYvXRT'>Apply Now!</Button>
       </div>
     </DefaultForm>
   )
