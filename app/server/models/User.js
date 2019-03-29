@@ -349,10 +349,10 @@ schema.methods.generateTempCode = function() {
   return crypto.randomBytes(4).toString("hex");
 }
 
-schema.methods.generateExpritationTime = function() {
+schema.methods.generateExpirationTime = function(expirationTime) {
   if(this.loginCodeExpiration == -1) { return -1; }
 
-  const date = new Date(Date.now() + 5*60*1000);
+  const date = new Date(Date.now() + expirationTime);
   return date.getTime();
 }
 
