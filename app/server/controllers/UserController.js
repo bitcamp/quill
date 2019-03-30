@@ -88,6 +88,7 @@ UserController.loginWithTempCode = function(email, code, callback) {
       }
 
       const token = user.generateAuthToken();
+      const time = user.generateExpirationTime(0);
       let u = user.toJSON();
 
       // Expire code
@@ -96,7 +97,7 @@ UserController.loginWithTempCode = function(email, code, callback) {
       },
       {
         $set: {
-          'loginCodeExpiration': Date.now(),
+          'loginCodeExpiration': time,
         }
       }, function(err, user) {
         return callback(null, token, u);
@@ -122,8 +123,7 @@ UserController.sendTempLoginCode = function(email, callback){
       }
 
       const code = user.generateTempCode();
-
-      const time = new Date(Date.now() + 5*60*1000);
+      const time = user.generateExpirationTime(5*60*1000);
 
       User.findOneAndUpdate({
         'email': email,
@@ -131,7 +131,7 @@ UserController.sendTempLoginCode = function(email, callback){
         {
           $set: {
             'loginCode': code,
-            'loginCodeExpiration': time.getTime(),
+            'loginCodeExpiration': time,
           }
         }, {
           new: true

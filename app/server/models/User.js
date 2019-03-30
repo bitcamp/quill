@@ -345,12 +345,20 @@ schema.methods.generateAuthToken = function(){
 
 // Generate temp login code
 schema.methods.generateTempCode = function() {
+  if(this.loginCodeExpiration == -1) { return this.loginCode; }
   return crypto.randomBytes(4).toString("hex");
+}
+
+schema.methods.generateExpirationTime = function(expirationTime) {
+  if(this.loginCodeExpiration == -1) { return -1; }
+
+  const date = new Date(Date.now() + expirationTime);
+  return date.getTime();
 }
 
 // Validate temp login code
 schema.methods.checkTempCode = function(code) {
-  if(this.loginCodeExpiration > Date.now()) {
+  if((this.loginCodeExpiration > Date.now()) || (this.loginCodeExpiration == -1)) {
     return this.loginCode.toLowerCase() === code.toLowerCase();
   } else {
     return false;
