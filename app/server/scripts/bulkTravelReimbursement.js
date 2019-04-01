@@ -31,6 +31,7 @@ const applyTravelReimbursements = async () => {
       await user.save();
     } catch (err) {
       console.log(err);
+      console.log(`For: "${email}", "${reimbursementLimit}"`);
       numErrors += 1;
     }
   });
