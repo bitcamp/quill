@@ -1,7 +1,7 @@
 const express = require('express');
 const UserController = require('../../controllers/UserController');
 const FirebaseEventController = require('../../controllers/FirebaseEventController');
-const { isAdmin,  isOwnerOrAdmin, defaultResponse } = require('./util');
+const { isAdmin, isOwnerOrAdmin, isOrganizerOrAdmin, defaultResponse } = require('./util');
 
 const router = express.Router({mergeParams: true});
 
@@ -137,9 +137,9 @@ router.post('/:id/admit', isAdmin, function (req, res) {
 });
 
 /**
- * Check in a user. ADMIN ONLY, DUH
+ * Check in a user. Admin or Organizer
  */
-router.post('/:id/checkin', isAdmin, function (req, res) {
+router.post('/:id/checkin', isOrganizerOrAdmin, function (req, res) {
   const id = req.params.id;
   const user = req.user;
 
@@ -147,9 +147,9 @@ router.post('/:id/checkin', isAdmin, function (req, res) {
 });
 
 /**
- * Check in a user. ADMIN ONLY, DUH
+ * Check in a user. Admin or Organizer
  */
-router.post('/:id/checkout', isAdmin, function (req, res) {
+router.post('/:id/checkout', isOrganizerOrAdmin, function (req, res) {
   const id = req.params.id;
   const user = req.user;
 

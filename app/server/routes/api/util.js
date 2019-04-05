@@ -51,6 +51,24 @@ const isOwnerOrAdmin = (req, res, next) => {
   });
 }
 
+const isOrganizerOrAdmin = (req, res, next) => {
+  const token = _getToken(req);
+
+  UserController.getByToken(token, function (err, user) {
+    if (err || !user) {
+      return res.status(500).send(err);
+    }
+
+    if (user.organizer || user.admin) {
+      return next();
+    }
+
+    return res.status(400).send({
+      message: 'Token does not match user id.'
+    });
+  });
+}
+
 /**
  * Default response to send an error and the data.
  * @param  {[type]} res [description]
@@ -96,5 +114,6 @@ const defaultResponse = (req, res) => {
 module.exports = {
   isAdmin,
   isOwnerOrAdmin,
+  isOrganizerOrAdmin,
   defaultResponse,
 };

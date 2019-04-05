@@ -243,6 +243,11 @@ let schema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  organizer: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   timestamp: {
     type: Number,
     required: true,
