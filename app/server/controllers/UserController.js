@@ -280,7 +280,8 @@ UserController.getPage = function(query, callback){
     var queries = [];
     var re = new RegExp(searchText, 'i');
     queries.push({ email: re });
-    queries.push({ 'profile.name': re });
+    queries.push({ 'profile.firstName': re });
+    queries.push({ 'profile.lastName': re });
     findQuery.$or = queries;
   }
 
