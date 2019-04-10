@@ -279,9 +279,11 @@ UserController.getPage = function(query, callback){
   if (searchText.length > 0){
     var queries = [];
     var re = new RegExp(searchText, 'i');
+    var tokenRegexes = searchText.split(' ').map(token => new RegExp(token, 'i'));
     queries.push({ email: re });
     queries.push({ 'profile.firstName': re });
     queries.push({ 'profile.lastName': re });
+    queries.push({ 'profile.firstName': { $in: tokenRegexes}, 'profile.lastName': { $in: tokenRegexes} });
     findQuery.$or = queries;
   }
 
