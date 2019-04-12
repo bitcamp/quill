@@ -676,7 +676,16 @@ UserController.checkInById = function(id, user, callback){
   }, {
     new: true
   },
-  callback);
+  function(err, user) {
+    if (err) {
+      return callback(err);
+    }
+    if (!user) {
+      return callback({ 'message': 'User not found or not confirmed'})
+    }
+
+    return callback(null, user);
+  });
 };
 
 /**
