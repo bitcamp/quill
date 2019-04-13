@@ -1,6 +1,7 @@
 import { action, observable, computed } from 'mobx';
 import * as AuthService from '../services/AuthService';
 import * as UserService from '../services/UserService';
+import AdminStore from './AdminStore';
 
 export default class AppStore {
   @observable token = null;
@@ -269,5 +270,9 @@ export default class AppStore {
         type: 'error',
       });
     }
+  }
+
+  constructor () {
+    this.adminStore = new AdminStore(this);
   }
 }

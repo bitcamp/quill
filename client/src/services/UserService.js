@@ -52,3 +52,24 @@ export const decline = async (token, id) => {
   const response = await fetch(url, options);
   return response;
 }
+
+export const fetchUsers = async (token, params = {}) => {
+  const esc = encodeURIComponent;
+  const queryString = Object.keys(params)
+    .map(k => esc(k) + '=' + esc(params[k]))
+    .join('&');
+  let url = API_URL + `/users?${queryString}`;
+
+  const options = {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}
