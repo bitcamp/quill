@@ -2,14 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 @observer
-class AdminUsers extends React.Component {
+class AdminActions extends React.Component {
   render() {
     return (
       <span>
-        Users
+        Actions
       </span>
     )
   }
 }
 
-export default AdminUsers;
+export default AdminActions;
