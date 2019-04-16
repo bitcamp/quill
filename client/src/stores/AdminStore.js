@@ -1,5 +1,6 @@
 import { action, observable, computed } from 'mobx';
 import * as UserService from '../services/UserService'
+import * as EventService from '../services/EventService'
 
 export default class AdminStore {
   @observable stats = { dummyStat: 1 };
@@ -7,7 +8,6 @@ export default class AdminStore {
   @observable currentPage = 0;
   @observable numPages = 1;
   @observable users = [];
-  
 
   @observable events = [];
 
@@ -25,6 +25,15 @@ export default class AdminStore {
         type: 'error',
         message: 'failed to search users',
       });
+    }
+  }
+
+  @action getEvents = async () => {
+    const eventRes = await EventService.getEvents();
+    console.log(eventRes)
+    if(eventRes.ok) {
+      const resJson = await eventRes.json();
+      this.events = resJson;
     }
   }
 

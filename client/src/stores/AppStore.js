@@ -73,7 +73,7 @@ export default class AppStore {
     const signupResponse = await AuthService.signup(email, password);
     this.loading = false;
     const signupJson = await signupResponse.json();
-    
+
     if (signupResponse.ok) {
       this.token = signupJson['token'];
       this.user = signupJson['user'];
@@ -127,7 +127,7 @@ export default class AppStore {
         type: 'success',
       });
       return true;
-    } else { 
+    } else {
       const responseJson = await response.json();
       this.clearMessages();
       this.messages.push({
@@ -172,7 +172,7 @@ export default class AppStore {
     return false;
   };
 
-  @action updateProfile = async (profile) => { 
+  @action updateProfile = async (profile) => {
     this.loading = true;
     const response = await UserService.updateProfile(this.token, this.user._id, profile);
     this.loading = false;
@@ -194,7 +194,7 @@ export default class AppStore {
         type: 'error',
       });
     }
-    
+
     return false;
   }
 

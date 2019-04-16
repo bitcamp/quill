@@ -15,6 +15,11 @@ const schema = new mongoose.Schema({
   img: String,
   beginnerFriendly: Boolean,
 
+  category: {
+    type: [String],
+    required: false
+  },
+
   numFavorited: {
     type: Number,
     default: 0
