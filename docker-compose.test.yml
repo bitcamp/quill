@@ -21,14 +21,3 @@ services:
     ports:
       - 3001:3001
     command: npx mocha --exit
-  client:
-    build: ./client
-    depends_on:
-      - quill
-    volumes:
-      - ./client:/client
-      - /client/node_modules
-      - /client/build
-    ports:
-      - 3000:3000
-    command: npm start
