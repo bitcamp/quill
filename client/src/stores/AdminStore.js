@@ -30,11 +30,29 @@ export default class AdminStore {
 
   @action getEvents = async () => {
     const eventRes = await EventService.getEvents();
-    console.log(eventRes)
+
     if(eventRes.ok) {
       const resJson = await eventRes.json();
       this.events = resJson;
     }
+  }
+
+  @action createEvent = async(eventInfo) => {
+    const resp = await EventService.createEvent(this.rootStore.token, eventInfo);
+
+    if(resp.ok) { this.getEvents(); }
+  }
+
+  @action updateEvent = async(eventInfo) => {
+    const resp = await EventService.updateEvent(this.rootStore.token, eventInfo);
+
+    if(resp.ok) { this.getEvents(); }
+  }
+
+  @action deleteEvent = async(id) => {
+    const resp = await EventService.deleteEvent(this.rootStore.token, id);
+
+    if(resp.ok) { this.getEvents(); }
   }
 
   constructor (rootStore) {

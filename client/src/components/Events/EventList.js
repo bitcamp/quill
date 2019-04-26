@@ -8,7 +8,7 @@ class EventList extends React.Component {
 
     return (<Item.Group>
         {events.map(event => (
-            <EventItem event={event}/>
+            <EventItem event={event} onEdit={this.props.onEdit} onDelete={this.onDelete}/>
         ))};
     </Item.Group>);
   }
