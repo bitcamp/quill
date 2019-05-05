@@ -1,17 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Menu } from 'semantic-ui-react';
-import { withRouter } from 'react-router';
 
-@withRouter
 @observer
 class AdminNav extends React.Component {
   render() {
-    let activePage = 'stats';
-    const splitPath = this.props.location.pathname.split('/', 3);
-    if (splitPath.length >= 3) {
-      activePage = splitPath[2];
-    }
+    const { activePage } = this.props;
 
     return (
       <Menu size='huge' fluid attached>

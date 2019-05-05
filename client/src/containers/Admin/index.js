@@ -15,9 +15,15 @@ import AdminActions from './AdminActions';
 @observer
 class Admin extends React.Component {
   render() {
+    const splitPath = this.props.location.pathname.split('/', 3);
+    const activePage = splitPath.length >= 3
+      ? splitPath[2]
+      : 'stats';
+
     return (
       <AdminPage>
-        <AdminNav 
+        <AdminNav
+          activePage={activePage}
           pushHistory={(destination) => this.props.history.push(destination)}
         />
         <Switch>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import UserStatistics from '../../components/UserStatistics';
 
@@ -9,18 +10,17 @@ class AdminStatistics extends React.Component {
     this._fetchStats();
   }
 
-  componentDidUpdate() {
-    this._fetchStats();
+  render() {
+    const { stats } = this.props.store.adminStore;
+    const statsToDisplay = toJS(stats);
+
+    return (
+      <UserStatistics stats={statsToDisplay} />
+    );
   }
 
   _fetchStats() {
     this.props.store.adminStore.loadStats();
-  }
-
-  render() {
-    return (
-      <UserStatistics stats={this.props.store.adminStore.stats} />
-    )
   }
 }
 

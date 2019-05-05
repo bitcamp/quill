@@ -2,16 +2,9 @@ import { action, observable, computed } from 'mobx';
 import * as UserService from '../services/UserService'
 
 export default class AdminStore {
+  // Statistics
+  @observable loadingStats = false;
   @observable stats = { };
-
-  @observable loadingUsers = false;
-  @observable currentPage = 0;
-  @observable numPages = 0;
-  @observable activeUser = null;
-  @observable activeUsers = [];
-
-  @observable events = [];
-
   @action loadStats = async () => {
     this.loadingStats = true;
 
@@ -30,6 +23,13 @@ export default class AdminStore {
 
     this.loadingStats = false;
   }
+
+  // Users
+  @observable loadingUsers = false;
+  @observable currentPage = 0;
+  @observable numPages = 0;
+  @observable activeUser = null;
+  @observable activeUsers = [];
 
   @action loadUsers = async (page, pageSize, query) => {
     this.loadingUsers = true;
@@ -112,6 +112,9 @@ export default class AdminStore {
 
     this.loadingUsers = false;
   }
+
+  // Events
+  @observable events = [];
 
   constructor (rootStore) {
     this.rootStore = rootStore;

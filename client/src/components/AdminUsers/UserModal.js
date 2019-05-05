@@ -2,18 +2,16 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Modal } from 'semantic-ui-react';
 
-const UserPopover = (props) => {
+const UserModal = ({ user, ...rest}) => {
   return (
     <Modal
+      {...rest}
       closeIcon
-      open={props.open}
-      onClose={props.onClose}
-
       content={<pre>
-        {JSON.stringify(props.user, null, '\t')}
+        {JSON.stringify(user, null, '\t')}
       </pre>}
     />
   );
 }
 
-export default observer(UserPopover);
+export default observer(UserModal);

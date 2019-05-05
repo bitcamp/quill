@@ -1,16 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import * as _ from 'lodash';
-import { Button, Input, Label, Search } from 'semantic-ui-react';
+import { Button, Input, Label } from 'semantic-ui-react';
 
 @observer
 class UsersSearch extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      intermediatePageSize: props.pageSize,
-    };
+    this.state = { intermediatePageSize: props.pageSize };
   }
 
   componentDidUpdate(prevProps) {

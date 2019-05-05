@@ -10,17 +10,16 @@ class UserRow extends React.Component {
 
   render () {
     const { user } = this.props;
-
-    let rowStatus = {};
+    const rowStatus = {};
     switch (user.status.name) {
       case 'confirmed':
-        rowStatus = { positive: true };
+        rowStatus.positive = true;
         break;
       case 'admitted':
-        rowStatus = { warning: true };
+        rowStatus.warning = true;
         break;
       case 'declined':
-        rowStatus = { error: true };
+        rowStatus.error = true;
         break;
       default:
         break;

@@ -20,7 +20,7 @@ class UsersLayout extends React.Component {
               : this.props.usersTable}
           </Grid.Column>
         </Grid.Row>
-        {this.props.userPopover}
+        {this.props.userModal}
         {this.props.admitModal}
         {this.props.checkinModal}
       </Grid>
