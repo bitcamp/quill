@@ -125,7 +125,7 @@ router.post('/:id/unfavoriteFirebaseEvent/:firebaseId', isOwnerOrAdmin, async fu
 });
 
 /**
- * Admit a user. ADMIN ONLY, DUH
+ * Admit a user. Admin only.
  *
  * Also attaches the user who did the admitting, for liabaility.
  */
@@ -137,7 +137,7 @@ router.post('/:id/admit', isAdmin, function (req, res) {
 });
 
 /**
- * Check in a user. Admin or Organizer
+ * Check in a user. Admin or Organizer.
  */
 router.post('/:id/checkin', isOrganizerOrAdmin, function (req, res) {
   const id = req.params.id;
@@ -147,7 +147,7 @@ router.post('/:id/checkin', isOrganizerOrAdmin, function (req, res) {
 });
 
 /**
- * Check in a user. Admin or Organizer
+ * Check out a user. Admin or Organizer.
  */
 router.post('/:id/checkout', isOrganizerOrAdmin, function (req, res) {
   const id = req.params.id;

@@ -651,7 +651,17 @@ UserController.admitUser = function(id, user, callback){
       }, {
         new: true
       },
-      callback);
+      function (err, user) {
+        if (err) {
+          return callback(err);
+        }
+
+        if (!user) {
+          return callback({ message: 'user cannot be admitted' })
+        }
+
+        return callback(null, user);
+      });
   });
 };
 

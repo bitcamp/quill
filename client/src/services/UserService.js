@@ -73,3 +73,48 @@ export const fetchUsers = async (token, params = {}) => {
   const response = await fetch(url, options);
   return response;
 }
+
+export const fetchStats = async (token) => {
+  const url = API_URL + '/users/stats';
+  const options = {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}
+
+export const admit = async (token, id) => {
+  const url = API_URL + `/users/${id}/admit`;
+  const options = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}
+
+export const checkin = async (token, id) => {
+  const url = API_URL + `/users/${id}/checkin`;
+  const options = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}
