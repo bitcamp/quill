@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Form } from 'formsy-semantic-ui-react';
-import DefaultForm from '../util/DefaultForm';
+import DefaultForm from '../../util/DefaultForm';
 import { Header } from 'semantic-ui-react';
 
 @observer

@@ -9,7 +9,6 @@ import LoginForm from '../components/LoginForm';
 @observer
 class Login extends React.Component {
   handleLogin = (email, password) => {
-    console.log("Trying to login user");
     this.props.store.login(email, password, this.props.history);
   }
 

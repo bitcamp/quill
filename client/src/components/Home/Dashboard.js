@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header, Segment, Message, Button } from 'semantic-ui-react';
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   render() {
     const { userData, title, message, showButton, buttonContent, buttonAction, showReimbursement = true} = this.props;
     const { status, name } = userData;
@@ -48,3 +48,5 @@ export default class Dashboard extends React.Component {
     )
   }
 }
+
+export default Dashboard;

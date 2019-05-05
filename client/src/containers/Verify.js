@@ -5,12 +5,13 @@ import BlankPage from '../layouts/BlankPage';
 import { promiseSleep } from '../util';
 
 const REDIRECT_DELAY = 3000; // ms
+const DEFAULT_STATE = { message: "Verifying..." };
 
 @withRouter
 @inject('store')
 @observer
 class Verify extends React.Component {
-  state = { message: "Verifying..." }
+  state = DEFAULT_STATE;
 
   _processVerification = async (verifyToken) => {
     const success = await this.props.store.verify(verifyToken, this.props.history);

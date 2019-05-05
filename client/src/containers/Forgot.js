@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import BlankPage from '../layouts/BlankPage';
-import ForgotForm from '../components/ForgotForm';
+import ForgotForm from '../components/Auth/ForgotForm';
 
 @inject('store')
 @observer

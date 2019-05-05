@@ -25,7 +25,6 @@ class Home extends React.Component {
       return null;
     }
 
-
     const { user } = this.props.store;
     
     const status = user.status.name.toUpperCase();

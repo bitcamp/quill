@@ -2,7 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import Page from '../layouts/Page';
-import ApplicationForm from '../components/ApplicationForm';
+import ApplicationForm from '../components/Apply/ApplicationForm';
 import ActionModal from '../components/ActionModal';
 
 @withRouter
@@ -36,7 +36,8 @@ class Apply extends React.Component {
         <ApplicationForm
           oldProfile={profile}
           schoolOptions={this.props.store.schoolOptions}
-          onSubmit={this.updateProfile} />
+          onSubmit={this.updateProfile}
+        />
       </Page>
     );
   }

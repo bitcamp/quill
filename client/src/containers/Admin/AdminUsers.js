@@ -3,10 +3,10 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import * as _ from 'lodash';
 import queryString from 'query-string';
-import UsersLayout from '../../layouts/UsersLayout';
-import UsersSearch from '../../components/AdminUsers/UsersSearch';
-import UsersTable from '../../components/AdminUsers/UsersTable';
-import UserModal from '../../components/AdminUsers/UserModal';
+import UsersLayout from '../../components/Admin/AdminUsers/UsersLayout';
+import UsersSearch from '../../components/Admin/AdminUsers/UsersSearch';
+import UsersTable from '../../components/Admin/AdminUsers/UsersTable';
+import UserModal from '../../components/Admin/AdminUsers/UserModal';
 import ActionModal from '../../components/ActionModal';
 
 const DEFAULT_PAGE = 0;

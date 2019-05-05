@@ -2,7 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import Page from '../layouts/Page';
-import ConfirmationForm from '../components/ConfirmationForm';
+import ConfirmationForm from '../components/Confirm/ConfirmationForm';
 import ActionModal from '../components/ActionModal';
 
 @withRouter

@@ -3,8 +3,8 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import { Switch, Route } from "react-router-dom";
 import AdminPage from '../../layouts/AdminPage';
-import AdminNav from '../../components/AdminNav';
-import AdminStatistics from './AdminStatistics';
+import AdminNav from '../../components/Admin/AdminNav';
+import AdminStats from './AdminStats';
 import AdminUsers from './AdminUsers';
 import AdminSettings from './AdminSettings';
 import AdminEvents from './AdminEvents';
@@ -27,8 +27,8 @@ class Admin extends React.Component {
           pushHistory={(destination) => this.props.history.push(destination)}
         />
         <Switch>
-          <Route exact path='/admin'          component={AdminStatistics} />
-          <Route exact path='/admin/stats'    component={AdminStatistics} />
+          <Route exact path='/admin'          component={AdminStats} />
+          <Route exact path='/admin/stats'    component={AdminStats} />
           <Route exact path='/admin/users'    component={AdminUsers}      />
           <Route exact path='/admin/settings' component={AdminSettings}   />
           <Route exact path='/admin/events'   component={AdminEvents}     />

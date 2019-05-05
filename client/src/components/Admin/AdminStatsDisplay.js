@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 
-class UserStatistics extends React.Component {
+class AdminStatsDisplay extends React.Component {
   render() {
     const { stats } = this.props;
 
@@ -13,4 +13,4 @@ class UserStatistics extends React.Component {
   }
 }
 
-export default UserStatistics;
+export default AdminStatsDisplay;

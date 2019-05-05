@@ -1,28 +1,37 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { Grid, Header } from 'semantic-ui-react';
-import LoadingDisplay from '../components/LoadingDisplay';
+import LoadingDisplay from '../../LoadingDisplay';
 
 @observer
 class UsersLayout extends React.Component {
   render() {
+    const {
+      usersSearch,
+      usersTable,
+      loading,
+      userModal,
+      admitModal,
+      checkinModal,
+    } = this.props;
+
     return (
       <Grid padded>
         <Grid.Row>
           <Grid.Column width={3}>
             <Header as='h3' content="Search" />
-            {this.props.usersSearch}
+            {usersSearch}
           </Grid.Column>
           <Grid.Column width={13}>
             <Header as='h3' content="Users" />
-            {this.props.loading
+            {loading
               ? <LoadingDisplay />
-              : this.props.usersTable}
+              : usersTable}
           </Grid.Column>
         </Grid.Row>
-        {this.props.userModal}
-        {this.props.admitModal}
-        {this.props.checkinModal}
+        {userModal}
+        {admitModal}
+        {checkinModal}
       </Grid>
     )
   }

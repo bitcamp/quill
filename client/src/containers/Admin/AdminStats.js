@@ -1,7 +1,7 @@
 import React from 'react';
 import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import UserStatistics from '../../components/UserStatistics';
+import UserStatistics from '../../components/Admin/AdminStatsDisplay';
 
 @inject('store')
 @observer
