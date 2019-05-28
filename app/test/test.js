@@ -3,11 +3,11 @@ process.env.NODE_ENV = 'test';
 
 const User = require('../server/models/User');
 
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../app');
-let should = chai.should();
-let expect = chai.expect;
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../app');
+const should = chai.should();
+const expect = chai.expect;
 
 chai.use(chaiHttp);
 
@@ -18,7 +18,7 @@ let register_details = {
 
 
 /**
-* Test the following in on scoop:
+* Test the following in one swoop:
 * - Create an account, login with details, and check if token comes
 */
 

@@ -16,8 +16,6 @@ services:
     volumes:
       - ./app:/quill/
       - /quill/node_modules
-      - /quill/client/build
-      - /quill/client/plugins
     ports:
       - 3001:3001
     command: npx mocha --exit
